@@ -15,27 +15,26 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');
+   // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');
 
     WebFont.load({
       custom: {
-        families: ['Space Mono'],
+        families: ['Slackey'],
       },
       active: () => {
         this.add
           .text(
             this.game.config.width / 2,
             this.game.config.height * (2 / 3),
-            'You can change me in MenuScene.js',
+            'Shrexy',
             {
-              fontFamily: 'Space Mono',
-              fontSize: '32px',
-              fontStyle: 'bold',
+              fontFamily: 'Slackey',
+              fontSize: '100px',
               fill: colors.white,
               align: 'center',
             }
           )
-          .setOrigin(0.5);
+          .setOrigin(0.5, 1.7, );
       },
     });
 

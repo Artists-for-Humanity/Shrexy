@@ -12,7 +12,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     return this;
   }
+  // Player clicking the UP key to jump up
 
+  //Player clicking the DOWN key to crouch down
   update() {
     if (this.cursors.left.isDown) {
       this.x -= 10;

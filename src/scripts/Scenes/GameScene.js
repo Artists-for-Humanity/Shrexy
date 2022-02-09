@@ -9,6 +9,7 @@ export default class GameScene extends Phaser.Scene {
       key: 'GameScene',
     });
   }
+  //input our Shrek.png to our player or character
 
   preload() {
     this.load.image('spraycan', new URL('../../assets/spraycan.png', import.meta.url).href);
@@ -21,4 +22,13 @@ export default class GameScene extends Phaser.Scene {
   update() {
     this.player.update();
   }
+  //The stick sprite to approach Shrek at an x-axis base with a starting speed
+
+  //The bird sprite to approach shrek at an y-axis base with a starting speed
+
+  //Shrek loses an hitpoint as Shrek touches either obstacle
+
+  //change the Shrek.png to an blinking-Shrek.png to indicate that Shrek had lost an hitpoint
+
+  //Input Knights.png in the side of the frame
 }

@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y, 'spraycan');
+    super(scene, x, y, 'shrek');
 
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
@@ -16,17 +16,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   //Player clicking the DOWN key to crouch down
   update() {
-    if (this.cursors.left.isDown) {
-      this.x -= 10;
-    }
-    if (this.cursors.right.isDown) {
-      this.x += 10;
-    }
     if (this.cursors.up.isDown) {
+      this.setTexture('shrek');
       this.y -= 10;
-    }
-    if (this.cursors.down.isDown) {
+    } else if (this.cursors.down.isDown) {
+      this.setTexture('shrek-2');
+      this.setSize(300, 150);
       this.y += 10;
+    }
+
+    if (!this.cursors.down.isDown) {
+      this.setTexture('shrek');
+      this.setSize(300, 300);
     }
   }
 }

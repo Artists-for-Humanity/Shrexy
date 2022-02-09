@@ -9,14 +9,14 @@ export default class GameScene extends Phaser.Scene {
       key: 'GameScene',
     });
   }
-  //input our Shrek.png to our player or character
 
   preload() {
-    this.load.image('spraycan', new URL('../../assets/spraycan.png', import.meta.url).href);
+    this.load.image('shrek', new URL('../../assets/shrek.png', import.meta.url).href);
+    this.load.image('shrek-2', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
   }
 
   create() {
-    this.player = new Player(this, this.game.config.width / 2, this.game.config.height / 2);
+    this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
   }
 
   update() {

@@ -24,8 +24,10 @@ Pause, Load, Menu
 // Set configuration for phaser game instance
 const config = {
   type: Phaser.AUTO,
-  width: 960,
-  height: 720,
+  width: window.innerWidth,
+  height: window.innerHeight,
+
+  //magical #s (bad coding)
 
   // Add physics, arcade, scene, and audio
   physics: {

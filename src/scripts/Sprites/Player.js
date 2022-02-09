@@ -8,23 +8,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.world.enableBody(this);
     this.setCollideWorldBounds(true);
 
-    this.cursors = scene.input.keyboard.createCursorKeys();
-
     return this;
   }
 
   update() {
-    if (this.cursors.left.isDown) {
-      this.x -= 10;
-    }
-    if (this.cursors.right.isDown) {
-      this.x += 10;
-    }
-    if (this.cursors.up.isDown) {
-      this.y -= 10;
-    }
-    if (this.cursors.down.isDown) {
-      this.y += 10;
+  
+    
     }
   }
-}
+

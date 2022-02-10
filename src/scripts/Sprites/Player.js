@@ -16,7 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   //Player clicking the DOWN key to crouch down
   update() {
-    if (this.cursors.up.isDown) {
+    if (this.cursors.up.isDown && !this.cursors.down.isDown) {
       this.setTexture('shrek');
       this.y -= 10;
     } else if (this.cursors.down.isDown) {

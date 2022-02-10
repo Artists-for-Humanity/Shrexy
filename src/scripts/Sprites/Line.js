@@ -29,7 +29,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     const angle = Phaser.Math.Angle.BetweenPoints(point1, point2) - Phaser.Math.DegToRad(90);
     const distance = Phaser.Math.Distance.BetweenPoints(point1, point2);
-    const interpolatedDistance = range(5, 500, 0.1, 0.4, distance);
+    const interpolatedDistance = range(5, 500, 0.1, 0.6, distance);
 
     this.setScale(interpolatedDistance);
 

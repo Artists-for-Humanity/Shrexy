@@ -40,7 +40,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [GameScene],
+  scene: [MenuScene, GameScene],
   //add menu scen back to array for start menu
   audio: {
     disableWebAudio: true,

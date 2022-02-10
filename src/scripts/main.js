@@ -24,8 +24,9 @@ Pause, Load, Menu
 // Set configuration for phaser game instance
 const config = {
   type: Phaser.AUTO,
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: 960,
+  height: 720,
+  backgroundColor: '#FFA633',
 
   //magical #s (bad coding)
 
@@ -36,10 +37,11 @@ const config = {
       gravity: {
         y: 0,
       },
-      debug: false,
+      debug: true,
     },
   },
-  scene: [MenuScene, GameScene],
+  scene: [GameScene],
+  //add menu scen back to array for start menu
   audio: {
     disableWebAudio: true,
   },

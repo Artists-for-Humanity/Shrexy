@@ -15,7 +15,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-   // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');
+    // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');
 
     WebFont.load({
       custom: {
@@ -23,18 +23,13 @@ export default class GameScene extends Phaser.Scene {
       },
       active: () => {
         this.add
-          .text(
-            this.game.config.width / 2,
-            this.game.config.height * (2 / 3),
-            'Shrexy',
-            {
-              fontFamily: 'Slackey',
-              fontSize: '100px',
-              fill: colors.white,
-              align: 'center',
-            }
-          )
-          .setOrigin(0.5, 1.7, );
+          .text(this.game.config.width / 2, this.game.config.height * (2 / 3), 'Shrexy', {
+            fontFamily: 'Slackey',
+            fontSize: '100px',
+            fill: colors.white,
+            align: 'center',
+          })
+          .setOrigin(0.5, 1.7);
       },
     });
 

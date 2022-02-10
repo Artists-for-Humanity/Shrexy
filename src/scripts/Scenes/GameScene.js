@@ -11,7 +11,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('shrek', new URL('../../assets/shrek.png', import.meta.url).href);
+    this.load.image('shrek', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-2', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
   }
 

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { Player } from '../Sprites/Player';
+import  Player  from '../Sprites/Player';
 import Obstacle from '../Sprites/Obstacle';
 
 export default class GameScene extends Phaser.Scene {

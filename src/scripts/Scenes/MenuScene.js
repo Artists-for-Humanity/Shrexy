@@ -7,12 +7,7 @@ export default class GameScene extends Phaser.Scene {
     super({ key: 'MenuScene' });
   }
 
-  preload() {
-    this.load.image(
-      'menu-scene-text',
-      new URL('../../assets/menu-scene-text.png', import.meta.url).href
-    );
-  }
+  preload() {}
 
   create() {
     // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');

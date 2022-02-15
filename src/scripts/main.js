@@ -5,8 +5,8 @@ import GameScene from './Scenes/GameScene';
 // Set configuration for phaser game instance
 const config = {
   type: Phaser.AUTO,
-  width: 960 * 1.2,
-  height: 720 * 1.2,
+  width: 1152,
+  height: 864,
 
   // Add physics, arcade, scene, and audio
   physics: {

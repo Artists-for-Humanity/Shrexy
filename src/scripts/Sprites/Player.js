@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
+export class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'shrek');
 
@@ -24,7 +24,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setSize(300, 150);
       this.y += 10;
     }
-
     if (!this.cursors.down.isDown) {
       this.setTexture('shrek');
       this.setSize(300, 300);

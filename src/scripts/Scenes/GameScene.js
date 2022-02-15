@@ -1,8 +1,10 @@
 import Phaser from 'phaser';
-import Player from '../Sprites/Player';
+import { Player } from '../Sprites/Player';
+import Obstacle from '../Sprites/Obstacle';
 
 export default class GameScene extends Phaser.Scene {
   player;
+  obstacle;
 
   constructor() {
     super({
@@ -19,12 +21,12 @@ export default class GameScene extends Phaser.Scene {
   // Spawns in Stick on the opposite side of Shrek
   create() {
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    // eslint-disable-next-line prettier/prettier
-    this.obstacle = this.add.image((this.game.config.width / 2) + 450, (this.game.config.height / 2) + 380, 'stick');
+    this.obstacle = new Obstacle(this, this.game.config.width / 0.2);
   }
 
   update() {
     this.player.update();
+    this.obstacle.update();
   }
   //The stick sprite to approach Shrek at an x-axis base with a starting speed
 

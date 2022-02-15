@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Customer from '../Sprites/Customer';
 import Line from '../Sprites/Line';
 import Player from '../Sprites/Player';
 
@@ -20,6 +21,11 @@ export default class GameScene extends Phaser.Scene {
   create() {
     this.player = new Player(this, this.game.config.width / 2, this.game.config.height / 2);
     this.line = new Line(this, this.game.config.width / 2, this.game.config.height / 2);
+    // if(difficulty = 'easy') {
+    //   easyCustomrs = ['c1', 'c2']
+    // }
+    // else if (difficulty = 'medium')
+    //this.customers = [new Customer, new Customer]
   }
 
   update() {

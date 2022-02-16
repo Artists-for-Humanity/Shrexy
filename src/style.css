@@ -35,6 +35,9 @@ h1 {
     font-family: 'Space Mono', cursive;
 }
 
-.fastTitle {
+.header {
     color: red;
+    display: flex;
+    justify-content: center;
+
 }

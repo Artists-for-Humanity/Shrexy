@@ -19,6 +19,7 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
     }
     if ('stick'.x === 0);
     {
+      this.setPosition(1200, 0);
     }
   }
 }

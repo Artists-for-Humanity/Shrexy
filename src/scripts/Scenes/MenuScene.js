@@ -2,20 +2,17 @@ import Phaser from 'phaser';
 import WebFont from 'webfontloader';
 import { colors } from '../constants';
 
-export default class GameScene extends Phaser.Scene {
+export default class MenuScene extends Phaser.Scene {
   constructor() {
     super({ key: 'MenuScene' });
   }
 
   preload() {
-    this.load.image(
-      'menu-scene-text',
-      new URL('../../assets/menu-scene-text.png', import.meta.url).href
-    );
+    this.load.image('menu-scene', new URL('../../assets/burger.png', import.meta.url).href);
   }
 
   create() {
-    this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');
+    this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene');
 
     WebFont.load({
       custom: {
@@ -25,8 +22,8 @@ export default class GameScene extends Phaser.Scene {
         this.add
           .text(
             this.game.config.width / 2,
-            this.game.config.height * (2 / 3),
-            'You can change me in MenuScene.js',
+            this.game.config.height * (2.5 / 3),
+            'Press space to Start ',
             {
               fontFamily: 'Space Mono',
               fontSize: '32px',

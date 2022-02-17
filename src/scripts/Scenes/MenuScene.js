@@ -7,7 +7,8 @@ export default class MenuScene extends Phaser.Scene {
     super({ key: 'background-2' });
   }
 
-  preload() {}
+  preload() {    this.load.image('background-2',new URL('../../assets/background-shrekshouse.png', import.meta.url).href);
+}
 
   create() {
     // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');

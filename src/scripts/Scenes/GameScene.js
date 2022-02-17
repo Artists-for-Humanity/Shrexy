@@ -18,15 +18,13 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('shrek', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-2', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
-    this.load.image(
-      'background',
-      new URL('../../assets/background-castle.png', import.meta.url).href
-    );
+    this.load.image('background',new URL('../../assets/background-castle.png', import.meta.url).href);
+
   }
   //Spawns in Shrek on the X-axis
   // Spawns in Stick on the opposite side of Shrek
   create() {
-    this.obsticles = this.physics.add.group();
+    this.obstacles = this.physics.add.group();
 
     this.background = this.add.image(
       this.game.config.width / 2,
@@ -34,16 +32,16 @@ export default class GameScene extends Phaser.Scene {
       'background'
     );
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height);
-    this.obsticles.add(new Obstacle(this, this.game.config.width, this.game.config.height));
+    this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height));
   }
 
   update() {
     this.player.update();
-    Phaser.Actions.IncX(this.obsticles.getChildren(), -this.gameSpeed);
+    Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
 
-    this.obsticles.getChildren().forEach((obsticle) => {
-      if (obsticle.getBounds().right < 0) {
-        this.obsticles.killAndHide(obsticle);
+    this.obstacles.getChildren().forEach((obstacle) => {
+      if (obstacle.getBounds().right < 0) {
+        this.obstacles.killAndHide(obstacle);
       }
     });
   }

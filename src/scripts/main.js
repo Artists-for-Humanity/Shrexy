@@ -16,7 +16,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [GameScene],
+  scene: [MenuScene],
   audio: {
     disableWebAudio: true,
   },

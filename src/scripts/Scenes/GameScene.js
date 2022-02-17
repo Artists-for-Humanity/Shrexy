@@ -12,6 +12,7 @@ export default class GameScene extends Phaser.Scene {
       key: 'GameScene',
     });
     this.customers = [];
+    this.spawnZone;
   }
 
   preload() {
@@ -33,59 +34,18 @@ export default class GameScene extends Phaser.Scene {
     this.counter = new Counter(this, this.game.config.width / 2, this.game.config.height / 2);
     this.player = new Player(this, this.game.config.width / 2, this.game.config.height / 2);
     this.line = new Line(this, this.game.config.width / 2, this.game.config.height / 2);
+    this.createSpawnZone();
 
     const customerPositions = [];
     for (let i = 1; i < 9; i++) {
+      const position = this.getRandomPosition();
       customerPositions.push({
-        x: Math.floor(Math.random() * 960),
-        y: Math.floor(Math.random() * 720),
+        x: position.x,
+        y: position.y,
         img: 'person' + i,
       });
     }
 
-    // const customerPositions = [
-
-    //   {
-    //     x: Math.floor(Math.random() * 960),
-    //     y: Math.floor(Math.random() * 720),
-    //     img: 'person1',
-    //   },
-    //   {
-    //     x: Math.floor(Math.random() * 960),
-    //     y: Math.floor(Math.random() * 720),
-    //     img: 'person2',
-    //   },
-    //   {
-    //     x: Math.floor(Math.random() * 960),
-    //     y: Math.floor(Math.random() * 720),
-    //     img: 'person3',
-    //   },
-    //   {
-    //     x: 600,
-    //     y: 600,
-    //     img: 'person4',
-    //   },
-    //   {
-    //     x: 800,
-    //     y: 600,
-    //     img: 'person5',
-    //   },
-    //   {
-    //     x: 600,
-    //     y: 300,
-    //     img: 'person6',
-    //   },
-    //   {
-    //     x: 200,
-    //     y: 400,
-    //     img: 'person7',
-    //   },
-    //   {
-    //     x: 800,
-    //     y: 200,
-    //     img: 'person8',
-    //   },
-    // ];
     customerPositions.map((position) => {
       console.log(position.x, position.y, position.img);
       const customer = new Customer(this, position.x, position.y, position.img);
@@ -102,5 +62,51 @@ export default class GameScene extends Phaser.Scene {
     this.customers.map((customer) => {
       customer.update();
     });
+  }
+
+  getRandomPosition() {
+    const position = {
+      x: Math.floor(Math.random() * 960),
+      y: Math.floor(Math.random() * 720),
+    };
+
+    const isInZone = this.spawnZone.contains(position.x, position.y);
+    console.log(position);
+
+    if (!isInZone) {
+      return this.getRandomPosition();
+    }
+
+    return position;
+  }
+
+  createSpawnZone() {
+    const { height, width } = this.game.config;
+    const counterBody = this.counter.body;
+    // var graphics = this.add.graphics();
+
+    // extend this further than Counter
+    const counterPositions = [
+      [width / 2 - counterBody.width / 2, height / 2 - counterBody.height / 2],
+      [width / 2 - counterBody.width / 2, height / 2 + counterBody.height / 2],
+      [width / 2 + counterBody.width / 2, height / 2 + counterBody.height / 2],
+      [width / 2 + counterBody.width / 2, height / 2 - counterBody.height / 2],
+    ];
+
+    var polygon = new Phaser.Geom.Polygon([
+      [0, 0],
+      [width, 0],
+      [width, height],
+      [0, height],
+      [0, 0],
+      counterPositions[0],
+      counterPositions[1],
+      counterPositions[2],
+      counterPositions[3],
+      counterPositions[0],
+      [0, 0],
+    ]);
+
+    this.spawnZone = polygon;
   }
 }

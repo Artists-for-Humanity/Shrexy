@@ -1,24 +1,22 @@
 import Phaser from 'phaser';
 import MenuScene from './Scenes/MenuScene';
 import GameScene from './Scenes/GameScene';
+import { dimensions } from './constants';
 
 // Set configuration for phaser game instance
 const config = {
   type: Phaser.AUTO,
-  width: 1152,
-  height: 864,
+  width: dimensions.width,
+  height: dimensions.height,
 
   // Add physics, arcade, scene, and audio
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: {
-        y: 1000,
-      },
       debug: true,
     },
   },
-  scene: [MenuScene, GameScene],
+  scene: [GameScene],
   audio: {
     disableWebAudio: true,
   },

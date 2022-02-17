@@ -10,6 +10,8 @@ export default class GameScene extends Phaser.Scene {
     super({
       key: 'GameScene',
     });
+
+    this.gameSpeed = 10;
   }
 
   preload() {
@@ -24,18 +26,26 @@ export default class GameScene extends Phaser.Scene {
   //Spawns in Shrek on the X-axis
   // Spawns in Stick on the opposite side of Shrek
   create() {
+    this.obsticles = this.physics.add.group();
+
     this.background = this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
       'background'
     );
-    this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    this.obstacle = new Obstacle(this, this.game.config.width / 0.2);
+    this.player = new Player(this, this.game.config.width / 4, this.game.config.height);
+    this.obsticles.add(new Obstacle(this, this.game.config.width, this.game.config.height));
   }
 
   update() {
     this.player.update();
-    this.obstacle.update();
+    Phaser.Actions.IncX(this.obsticles.getChildren(), -this.gameSpeed);
+
+    this.obsticles.getChildren().forEach((obsticle) => {
+      if (obsticle.getBounds().right < 0) {
+        this.obsticles.killAndHide(obsticle);
+      }
+    });
   }
   //The stick sprite to approach Shrek at an x-axis base with a starting speed
 

@@ -4,7 +4,7 @@ import { colors } from '../constants';
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'MenuScene' });
+    super({ key: 'background-2' });
   }
 
   preload() {}

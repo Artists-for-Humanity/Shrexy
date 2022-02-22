@@ -12,7 +12,7 @@ export default class MenuScene extends Phaser.Scene {
 }
 
   create() {
-    // this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');
+    this.add.image(this.game.config.width / 2, this.game.config.height / 2,  'background-2');
 
     WebFont.load({
       custom: {
@@ -20,7 +20,7 @@ export default class MenuScene extends Phaser.Scene {
       },
       active: () => {
         this.add
-          .text(this.game.config.width / 2, this.game.config.height * (2 / 3), 'Shrexy', {
+          .text(this.game.config.width / 2, this.game.config.height * (2 / 3), 'Shrexy shrexy', {
             fontFamily: 'Slackey',
             fontSize: '100px',
             fill: colors.white,
@@ -30,8 +30,10 @@ export default class MenuScene extends Phaser.Scene {
       },
     });
 
-    this.input.keyboard.on('keydown-SPACE', () => {
+    this.input.keyboard.on('keydown-UP', () => {
+      console.log('reachme 00')
       this.scene.start('GameScene');
+      console.log('reachme 01')
     });
   }
 }

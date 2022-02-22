@@ -19,7 +19,6 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('shrek-2', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
     this.load.image('background',new URL('../../assets/background-castle.png', import.meta.url).href);
-
   }
   //Spawns in Shrek on the X-axis
   // Spawns in Stick on the opposite side of Shrek

@@ -19,7 +19,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   update() {
     if (this.cursors.up.isDown && !this.cursors.down.isDown) {
       this.setTexture('shrek');
-      this.y -= 10;
+      this.y -= 25;
     } else if (this.cursors.down.isDown) {
       this.setTexture('shrek-2');
       this.setSize(300, 150);

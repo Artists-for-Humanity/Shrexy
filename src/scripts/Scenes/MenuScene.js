@@ -4,15 +4,15 @@ import { colors } from '../constants';
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'background-2' });
+super({ key: 'MenuScene' });
   }
 
   preload() {   
-  this.load.image('background-2',new URL('../../assets/background-shrekshouse.png', import.meta.url).href);
+  this.load.image('background-3',new URL('../../assets/background-shrekshouse.png', import.meta.url).href);
 }
 
   create() {
-    this.add.image(this.game.config.width / 2, this.game.config.height / 2,  'background-2');
+    this.add.image(this.game.config.width / 2, this.game.config.height / 2,  'background-3');
 
     WebFont.load({
       custom: {
@@ -20,7 +20,7 @@ export default class MenuScene extends Phaser.Scene {
       },
       active: () => {
         this.add
-          .text(this.game.config.width / 2, this.game.config.height * (2 / 3), 'Shrexy shrexy', {
+          .text(this.game.config.width / 2, this.game.config.height * (2 / 3), 'Shrexy', {
             fontFamily: 'Slackey',
             fontSize: '100px',
             fill: colors.white,
@@ -31,9 +31,7 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     this.input.keyboard.on('keydown-UP', () => {
-      console.log('reachme 00')
       this.scene.start('GameScene');
-      console.log('reachme 01')
     });
   }
 }

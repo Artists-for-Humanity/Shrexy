@@ -18,24 +18,40 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('shrek', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-2', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
-    this.load.image('background',new URL('../../assets/background-castle.png', import.meta.url).href);
+    this.load.image('background',new URL('../../assets/background-forest.png', import.meta.url).href);
   }
   //Spawns in Shrek on the X-axis
   // Spawns in Stick on the opposite side of Shrek
   create() {
-    this.obstacles = this.physics.add.group();
+    // this.obstacles = this.physics.add.group();
 
     this.background = this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
       'background'
     );
+    // this.background.autoScroll(-100, 0);
+    this.obstacles = this.physics.add.group();
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height);
-    this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height));
+    // this.obstacles = new Obstacle(this, this.game.config.width, this.game.config.height);
+    this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height)); 
+    this.obstacles.add(new Obstacle(this, this.game.config.width + 300, this.game.config.height)); 
+
   }
 
   update() {
+    // this.obstacles.update();
     this.player.update();
+    this.generateObstacle();
+
+  }
+
+  addObstacle(){
+    // for (var i = 0; i < numberOfHills; i++) {
+		// 	var hill = obstacle.create(((Math.random() * 900) + 800), ((Math.random() * 250) -20), 'sprites', 'obstacle');
+  }
+
+  generateObstacle(){
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
@@ -44,6 +60,8 @@ export default class GameScene extends Phaser.Scene {
       }
     });
   }
+
+
   //The stick sprite to approach Shrek at an x-axis base with a starting speed
 
   //The bird sprite to approach shrek at an y-axis base with a starting speed

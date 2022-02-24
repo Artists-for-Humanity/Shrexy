@@ -17,8 +17,9 @@ export default class GameScene extends Phaser.Scene {
   preload() {
     this.load.image('shrek', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-2', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
-    this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
     this.load.image('background',new URL('../../assets/background-forest.png', import.meta.url).href);
+    this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
+    this.load.image('ground',new URL('../../assets/background-forest-ground.png', import.meta.url).href);
   }
   //Spawns in Shrek on the X-axis
   // Spawns in Stick on the opposite side of Shrek
@@ -30,19 +31,34 @@ export default class GameScene extends Phaser.Scene {
       this.game.config.height / 2,
       'background'
     );
+    this.ground = this.add.sprite(this.game.config.width/2, this.game.config.height , 'ground')
+    this.physics.world.enable(this.ground);
+    this.ground.body.setImmovable(true);
+    this.ground.visible = false;
+    this.physics.world.enableBody(this.ground);
+
+    // this.ground.enableBody = true;
+		// this.ground.physicsBodyType=Phaser.Physics.ARCADE;
+    // this.physics.arcade.enable(this.ground);
     // this.background.autoScroll(-100, 0);
-    this.obstacles = this.physics.add.group();
+    this.obstacles = this.physics.add.group(); 
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height);
     // this.obstacles = new Obstacle(this, this.game.config.width, this.game.config.height);
     this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height)); 
-    this.obstacles.add(new Obstacle(this, this.game.config.width + 300, this.game.config.height)); 
+    //this.obstacles.add(new Obstacle(this, this.game.config.width + 300, this.game.config.height));
+    this.physics.add.collider(this.player, this.ground); 
+    this.physics.add.collider(this.obstacles, this.ground); 
+    console.log(this.player);
 
   }
 
   update() {
     // this.obstacles.update();
+    // console.log(this.ground.height);
     this.player.update();
     this.generateObstacle();
+    //console.log(this.player, this.ground);
+    // this.physics.arcade.collide(this.player, this.ground);
 
   }
 
@@ -56,11 +72,13 @@ export default class GameScene extends Phaser.Scene {
 
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.getBounds().right < 0) {
-        this.obstacles.killAndHide(obstacle);
+        const randNum = Math.random() * (1500 - 1000) + 1000;
+        obstacle.setXPosition(randNum);
       }
     });
   }
 
+  // 
 
   //The stick sprite to approach Shrek at an x-axis base with a starting speed
 

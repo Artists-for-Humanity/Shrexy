@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { dimensions } from '../constants';
 
 export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
+  constructor(scene, x, y) { 
     super(scene, x, y, 'stick');
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
@@ -15,7 +15,7 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() { 
-    console.log(this);
+    //console.log(this);
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
@@ -24,4 +24,10 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
       }
     });
   }
+
+  setXPosition(val) {
+    console.log("X value was changed")
+    this.x = val;
+  }
+
 }

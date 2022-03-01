@@ -31,7 +31,8 @@ export default class GameScene extends Phaser.Scene {
       this.game.config.height / 2,
       'background'
     );
-    this.ground = this.add.sprite(this.game.config.width/2, this.game.config.height , 'ground')
+    this.ground = this.add.sprite(this.game.config.width/2, this.game.config.height, 'ground');
+    this.ground.setOrigin(0.5, 1);
     this.physics.world.enable(this.ground);
     this.ground.body.setImmovable(true);
     this.ground.visible = false;
@@ -43,13 +44,9 @@ export default class GameScene extends Phaser.Scene {
     // this.background.autoScroll(-100, 0);
     this.obstacles = this.physics.add.group(); 
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    // this.obstacles = new Obstacle(this, this.game.config.width, this.game.config.height);
-    this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height)); 
-    //this.obstacles.add(new Obstacle(this, this.game.config.width + 300, this.game.config.height));
+    this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height - this.ground.height)); 
     this.physics.add.collider(this.player, this.ground); 
     this.physics.add.collider(this.obstacles, this.ground); 
-    console.log(this.player);
-
   }
 
   update() {

@@ -15,8 +15,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('shrek', new URL('../../assets/newshrek.png', import.meta.url).href);
-    this.load.image('shrek-2', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
+    this.load.image('shrek-standing', new URL('../../assets/newshrek.png', import.meta.url).href);
+    this.load.image('shrek-crouching', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
     this.load.image('background',new URL('../../assets/background-forest.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
     this.load.image('ground',new URL('../../assets/background-forest-ground.png', import.meta.url).href);
@@ -42,7 +42,7 @@ export default class GameScene extends Phaser.Scene {
     // this.physics.arcade.enable(this.ground);
     // this.background.autoScroll(-100, 0);
     this.obstacles = this.physics.add.group(); 
-    this.player = new Player(this, this.game.config.width / 4, this.game.config.height);
+    this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
     // this.obstacles = new Obstacle(this, this.game.config.width, this.game.config.height);
     this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height)); 
     //this.obstacles.add(new Obstacle(this, this.game.config.width + 300, this.game.config.height));

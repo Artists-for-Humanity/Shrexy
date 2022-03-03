@@ -12,25 +12,32 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.gameSpeed = 10;
+    this.obstacles;
+    this.ground;
   }
 
   preload() {
     this.load.image('shrek-standing', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-crouching', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
-    this.load.image('background',new URL('../../assets/background-forest.png', import.meta.url).href);
+    this.load.image('bg1',new URL('../../assets/background-forest.png', import.meta.url).href);
+    this.load.image('bg2',new URL('../../assets/swamp-bg-placeholder.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
     this.load.image('ground',new URL('../../assets/background-forest-ground.png', import.meta.url).href);
   }
   //Spawns in Shrek on the X-axis
   // Spawns in Stick on the opposite side of Shrek
   create() {
-    // this.obstacles = this.physics.add.group();
 
-    this.background = this.add.image(
-      this.game.config.width / 2,
-      this.game.config.height / 2,
-      'background'
-    );
+    // this.background = this.add.image(
+    //   this.game.config.width / 2,
+    //   this.game.config.height / 2,
+    //   'bg'
+    // );
+
+    this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1162, 864, 'bg1');
+
+
+    this.ground = this.physics.add.staticGroup();
     this.ground = this.add.sprite(this.game.config.width/2, this.game.config.height, 'ground');
     this.ground.setOrigin(0.5, 1);
     this.physics.world.enable(this.ground);
@@ -38,25 +45,24 @@ export default class GameScene extends Phaser.Scene {
     this.ground.visible = false;
     this.physics.world.enableBody(this.ground);
 
-    // this.ground.enableBody = true;
-		// this.ground.physicsBodyType=Phaser.Physics.ARCADE;
-    // this.physics.arcade.enable(this.ground);
     // this.background.autoScroll(-100, 0);
     this.obstacles = this.physics.add.group(); 
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    this.obstacles.add(new Obstacle(this, this.game.config.width, this.game.config.height - this.ground.height)); 
-    this.physics.add.collider(this.player, this.ground); 
-    this.physics.add.collider(this.obstacles, this.ground); 
+    
+    this.obstacles.add(new Obstacle(this, this.game.config.width * 2 / 2, this.game.config.height - this.ground.height * 1.43));
+
+    this.physics.add.collider(this.player, this.ground);
+    this.physics.add.collider(this.obstacles, this.ground);
+
+    this.physics.add.collider(this.player, this.obstacles, () => {
+      // console.log("COLLIDE");
+    });
   }
 
   update() {
-    // this.obstacles.update();
-    // console.log(this.ground.height);
     this.player.update();
     this.generateObstacle();
-    //console.log(this.player, this.ground);
-    // this.physics.arcade.collide(this.player, this.ground);
-
+    this.background.tilePositionX += 2;
   }
 
   addObstacle(){
@@ -65,9 +71,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   generateObstacle(){
+    // console.log(this.obstacles)
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
+      obstacle.setImmovable(true)
       if (obstacle.getBounds().right < 0) {
         const randNum = Math.random() * (1500 - 1000) + 1000;
         obstacle.setXPosition(randNum);

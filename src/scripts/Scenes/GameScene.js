@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Player from '../Sprites/Player';
 import Obstacle from '../Sprites/Obstacle';
+import BirdObstacle from '../Sprites/BirdObstacle';
 
 export default class GameScene extends Phaser.Scene {
   player;
@@ -14,6 +15,7 @@ export default class GameScene extends Phaser.Scene {
     this.gameSpeed = 10;
     this.obstacles;
     this.ground;
+    this.birdObstacles;
   }
 
   preload() {
@@ -22,6 +24,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('bg1',new URL('../../assets/background-forest.png', import.meta.url).href);
     this.load.image('bg2',new URL('../../assets/swamp-bg-placeholder.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
+    this.load.image('bird', new URL('../../assets/bird.png', import.meta.url).href);
     this.load.image('ground',new URL('../../assets/background-forest-ground.png', import.meta.url).href);
   }
   //Spawns in Shrek on the X-axis
@@ -48,9 +51,9 @@ export default class GameScene extends Phaser.Scene {
     // this.background.autoScroll(-100, 0);
     this.obstacles = this.physics.add.group(); 
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    
     this.obstacles.add(new Obstacle(this, this.game.config.width * 2 / 2, this.game.config.height - this.ground.height * 1.43));
-
+    this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2 / 2, this.game.config.height - this.ground.height * 1.43));
+    //console.log(this.obstacles);
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
 
@@ -79,6 +82,11 @@ export default class GameScene extends Phaser.Scene {
       if (obstacle.getBounds().right < 0) {
         const randNum = Math.random() * (1500 - 1000) + 1000;
         obstacle.setXPosition(randNum);
+        // Check if type attribute in class is a good idea. 
+        // Don't use getters. 
+        if (obstacle.type === "bird") {
+          obstacle.y = Math.random() * (500 - 100) + 100;;
+        }
       }
     });
   }

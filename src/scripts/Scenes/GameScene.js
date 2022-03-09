@@ -16,96 +16,91 @@ export default class GameScene extends Phaser.Scene {
     this.obstacles;
     this.ground;
     this.birdObstacles;
+    this.isAlive = true;
   }
 
   preload() {
     this.load.image('shrek-standing', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-crouching', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
-    this.load.image('bg1',new URL('../../assets/background-forest.png', import.meta.url).href);
-    this.load.image('bg2',new URL('../../assets/swamp-bg-placeholder.png', import.meta.url).href);
+    this.load.image('bg1',new URL('../../assets/shrexy-bg3.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
     this.load.image('bird', new URL('../../assets/bird.png', import.meta.url).href);
-    this.load.image('ground',new URL('../../assets/background-forest-ground.png', import.meta.url).href);
+    this.load.image('ground',new URL('../../assets/shrexy-ground1.png', import.meta.url).href);
   }
   //Spawns in Shrek on the X-axis
   // Spawns in Stick on the opposite side of Shrek
   create() {
-
-    // this.background = this.add.image(
-    //   this.game.config.width / 2,
-    //   this.game.config.height / 2,
-    //   'bg'
-    // );
-
-    this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1162, 864, 'bg1');
+    this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
 
-    this.ground = this.physics.add.staticGroup();
-    this.ground = this.add.sprite(this.game.config.width/2, this.game.config.height, 'ground');
+    // this.ground = this.physics.add.staticGroup();
+    this.ground = this.add.tileSprite(this.game.config.width/2, this.game.config.height, 1152, 108, 'ground');
+    // this.ground = this.add.sprite(this.game.config.width/2, this.game.config.height, 'ground');
+
+    // this.ground.body.collideWorldBounds(true);
+
     this.ground.setOrigin(0.5, 1);
     this.physics.world.enable(this.ground);
     this.ground.body.setImmovable(true);
-    this.ground.visible = false;
-    this.physics.world.enableBody(this.ground);
+    // this.ground.visible = false;
+    // this.physics.world.enableBody(this.ground);
 
-    // this.background.autoScroll(-100, 0);
     this.obstacles = this.physics.add.group(); 
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    this.obstacles.add(new Obstacle(this, this.game.config.width * 2 / 2, this.game.config.height - this.ground.height * 1.43));
-    this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2 / 2, this.game.config.height - this.ground.height * 1.43));
+    this.obstacles.add(new Obstacle(this, this.game.config.width,  this.game.config.height - 143));
+    this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 2));
     //console.log(this.obstacles);
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
 
     this.physics.add.collider(this.player, this.obstacles, () => {
-      // console.log("COLLIDE");
+      this.isAlive = false;
     });
   }
 
   update() {
     this.player.update();
     this.generateObstacle();
+    this.gameOver();
     this.background.tilePositionX += 2;
+    this.ground.tilePositionX += 3;
   }
 
-  addObstacle(){
-    // for (var i = 0; i < numberOfHills; i++) {
-		// 	var hill = obstacle.create(((Math.random() * 900) + 800), ((Math.random() * 250) -20), 'sprites', 'obstacle');
-  }
 
   generateObstacle(){
-    // console.log(this.obstacles)
+    //The stick sprite to approach Shrek at an x-axis base with a starting speed
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
       obstacle.setImmovable(true)
       if (obstacle.getBounds().right < 0) {
-        const randNum = Math.random() * (1500 - 1000) + 1000;
-        obstacle.setXPosition(randNum);
-        // Check if type attribute in class is a good idea. 
-        // Don't use getters. 
+        // const randNum = Math.random() * (1500 - 1000) + 1000;
+        obstacle.setXPosition(this.game.config.width * 1.5);
+        obstacle.setSize();
+
+        //The bird sprite to approach shrek at an y-axis base with a starting speed
         if (obstacle.type === "bird") {
-          obstacle.y = Math.random() * (500 - 100) + 100;;
+          // obstacle.y = Math.random() * (500 - 100) + 100;;
+          obstacle.y = this.game.config.height / 2;
         }
       }
     });
   }
 
-  // 
+  //If the Game Over screen is up; allow option for player to play again, or to access the shop
+  gameOver(){
+    if (this.isAlive == false){
+      // this.scene.start('MenuScene');
+      console.log('DONKEH!!');
+    }
+    this.isAlive = true;
+  }
 
-  //The stick sprite to approach Shrek at an x-axis base with a starting speed
-
-  //The bird sprite to approach shrek at an y-axis base with a starting speed
 
   //Input Knights.png in the side of the frame
 
-  //
-
   //Increase the score count based on the amount of coins collected or whilst collected.
 
-  //
-
-  //If the Game Over screen is up; allow option for player to play again, or to access the shop
 
   //if player is in Shop, allow option to exit or buy
 

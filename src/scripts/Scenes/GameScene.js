@@ -12,49 +12,59 @@ export default class GameScene extends Phaser.Scene {
       key: 'GameScene',
     });
 
-    this.gameSpeed = 10;
+    this.gameSpeed = 15;
     this.obstacles;
     this.ground;
     this.birdObstacles;
     this.isAlive = true;
+    this.tries = 0;
   }
 
   preload() {
     this.load.image('shrek-standing', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-crouching', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
-    this.load.image('bg1',new URL('../../assets/shrexy-bg3.png', import.meta.url).href);
+    this.load.image('bg1',new URL('../../assets/shrexy-bg4.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
     this.load.image('bird', new URL('../../assets/bird.png', import.meta.url).href);
     this.load.image('ground',new URL('../../assets/shrexy-ground1.png', import.meta.url).href);
   }
-  //Spawns in Shrek on the X-axis
-  // Spawns in Stick on the opposite side of Shrek
+
+  // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
   create() {
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
-
-    // this.ground = this.physics.add.staticGroup();
     this.ground = this.add.tileSprite(this.game.config.width/2, this.game.config.height, 1152, 108, 'ground');
-    // this.ground = this.add.sprite(this.game.config.width/2, this.game.config.height, 'ground');
 
-    // this.ground.body.collideWorldBounds(true);
 
     this.ground.setOrigin(0.5, 1);
     this.physics.world.enable(this.ground);
     this.ground.body.setImmovable(true);
-    // this.ground.visible = false;
-    // this.physics.world.enableBody(this.ground);
 
     this.obstacles = this.physics.add.group(); 
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
     this.obstacles.add(new Obstacle(this, this.game.config.width,  this.game.config.height - 143));
     this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 2));
-    //console.log(this.obstacles);
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
 
-    this.physics.add.collider(this.player, this.obstacles, () => {
-      this.isAlive = false;
+    this.physics.add.collider(this.player, this.obstacles, (a, b) => {
+      if (b.type === 'stick')
+      {
+        b.destroy();
+        this.obstacles.add(new Obstacle(this, this.game.config.width,  this.game.config.height - 143));
+      }
+      if (b.type === 'bird')
+      {
+        b.destroy();
+        this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 2));
+      }
+      this.tries += 1;
+      if (this.tries === 3){
+        this.isAlive = false;
+        this.tries = 0;
+      }
+      console.log(this.tries)
+
     });
   }
 
@@ -68,19 +78,16 @@ export default class GameScene extends Phaser.Scene {
 
 
   generateObstacle(){
-    //The stick sprite to approach Shrek at an x-axis base with a starting speed
+    //The stick sprite approaches Shrek at an x-axis with a starting speed
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
       obstacle.setImmovable(true)
       if (obstacle.getBounds().right < 0) {
-        // const randNum = Math.random() * (1500 - 1000) + 1000;
         obstacle.setXPosition(this.game.config.width * 1.5);
-        obstacle.setSize();
 
-        //The bird sprite to approach shrek at an y-axis base with a starting speed
+        //The bird sprite approaches shrek at a const y-axis base with a starting speed
         if (obstacle.type === "bird") {
-          // obstacle.y = Math.random() * (500 - 100) + 100;;
           obstacle.y = this.game.config.height / 2;
         }
       }
@@ -90,8 +97,8 @@ export default class GameScene extends Phaser.Scene {
   //If the Game Over screen is up; allow option for player to play again, or to access the shop
   gameOver(){
     if (this.isAlive == false){
-      // this.scene.start('MenuScene');
-      console.log('DONKEH!!');
+      this.scene.start('MenuScene');
+      // console.log('DONKEH!!');
     }
     this.isAlive = true;
   }

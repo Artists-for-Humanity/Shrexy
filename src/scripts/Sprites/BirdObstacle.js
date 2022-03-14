@@ -9,6 +9,7 @@ export default class BirdObstacle extends Phaser.Physics.Arcade.Sprite {
       this.scaleX = .35;
       this.scaleY = .35;
       this.type = "bird";
+      this.setSize(200, 250);
       return this;
     }
 

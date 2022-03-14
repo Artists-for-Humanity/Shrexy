@@ -13,12 +13,12 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false,
+      debug: true,
     },
   },
   scene: [MenuScene, GameScene],
   audio: {
-    disableWebAudio: false,
+    disableWebAudio: true,
   },
 };
 

@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&family=Simonetta:wght@900&display=swap');
+
+body {
+    background-color: #86cc02;
+}
+
+.main-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #b9f940;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.shrexy-logo {
+    width: 50%;
+}
+
+.marketing-block {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    margin: 5%;
+}
+
+@media only screen and (min-width: 950px) {
+    .marketing-block {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px;
+    }
+
+    .marketing-block:nth-child(odd) .marketing-block-text {
+        order: -1;
+    }
+}
+
+.screenshot1 {
+    padding-bottom: 5%;
+    width: 100%;
+}
+
+.tagline-text {
+    font-family: 'Simonetta', Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    padding-bottom: 5px;
+    color: #35572f;
+    text-align: left;
+}
+
+.description-text {
+    font-family: 'Secular One', Arial, Helvetica, sans-serif;
+    color: #537f01;
+    text-align: justify;
+    font-size: 25px;
+    line-height: 200%;
+    padding-top: 6px;
+}
+
+.screenshot2 {
+    padding-bottom: 5%;
+    width: 100%;
+}
+
+.play-block {
+    display: flex;
+    justify-content: center;
+}
+
+.play-button {
+    cursor: pointer;
+    background-color: #b9f940;
+    color: #537f01;
+    border: none;
+    border-radius: 25px;
+    width: 70%;
+    font-family: 'Slackey';
+    font-size: 70px;
+}
+
+.footer-block {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Secular One', Arial, Helvetica, sans-serif;
+}
+
+@media only screen and (min-width: 950px) {
+    .shrexy-logo {
+        width: 30%;
+    }
+}
+
+
+
+@media only screen and (max-width: 1800px) and (min-width: 1400.1px) {
+    .description-text {
+        font-family: 'Secular One', Arial, Helvetica, sans-serif;
+        color: #537f01;
+        text-align: justify;
+        font-size: 25px;
+        line-height: 200%;
+    }
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 950.1px) {
+    .description-text {
+        font-family: 'Secular One', Arial, Helvetica, sans-serif;
+        color: #537f01;
+        text-align: justify;
+        font-size: 22px;
+        line-height: 200%;
+    }
+
+    .tagline-text-align-2 {
+        text-align: right;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .description-text {
+        font-family: 'Secular One', Arial, Helvetica, sans-serif;
+        color: #537f01;
+        text-align: justify;
+        font-size: 21px;
+        line-height: 200%;
+    }
+}
+
+@media only screen and (min-width: 1250px) {
+    .description-text {
+        font-family: 'Secular One', Arial, Helvetica, sans-serif;
+        color: #537f01;
+        text-align: justify;
+        font-size: 25px;
+        line-height: 200%;
+        padding-top: 15px;
+    }
+
+    .description-text-padding-1 {
+        padding-left: 40px;
+    }
+
+    .description-text-padding-2 {
+        padding-right: 40px;
+    }
+
+    .tagline-text-align-2 {
+        text-align: right;
+    }
+}

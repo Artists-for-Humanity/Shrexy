@@ -70,14 +70,14 @@ body {
 }
 
 .play-button {
-    cursor: pointer;
     background-color: #b9f940;
     color: #537f01;
-    border: none;
     border-radius: 25px;
     width: 70%;
     font-family: 'Slackey';
     font-size: 70px;
+    text-decoration: none;
+    text-align: center;
 }
 
 .footer-block {

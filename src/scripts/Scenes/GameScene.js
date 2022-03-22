@@ -63,7 +63,7 @@ export default class GameScene extends Phaser.Scene {
         this.isAlive = false;
         this.tries = 0;
       }
-      console.log(this.tries)
+      // console.log(this.tries)
 
     });
   }

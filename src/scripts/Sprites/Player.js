@@ -2,12 +2,13 @@ import Phaser from 'phaser';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y, 'shrek-standing');
+    super(scene, x, y, 'shrekanim');
 
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
     this.setGravityY(4000);
     this.setCollideWorldBounds(true);
+    this.setScale(1, 1.5);
     this.setOrigin(0.5, 1);
     this.setSize(75, 275)
 
@@ -24,24 +25,24 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     const onFloor = this.body.onFloor();
 
     if (pressingUp && onFloor) {
-      this.setTexture('shrek-standing');
+      // this.setTexture('shrek-standing');
       this.setVelocityY(-1400);
-      this.setDisplaySize(180, 275);
+      // this.setDisplaySize(180, 275);
     }
     else if (pressingDown && onFloor) {
-      this.setTexture('shrek-crouching');
+      // this.setTexture('shrek-crouching');
       this.setDisplaySize(180, 150);
      
     }
     else if (pressingDown && !onFloor) {
-      this.setTexture('shrek-crouching');
+      // this.setTexture('shrek-crouching');
       this.setVelocityY(1400);
-      this.setDisplaySize(180, 150);
+      // this.setDisplaySize(100, 75);
     }
 
     else if (!pressingDown && onFloor) {
-      this.setTexture('shrek-standing');
-      this.setDisplaySize(180, 275);
+      // this.setTexture('shrek-standing');
+      // this.setDisplaySize(180, 275);
     }
   }
 }

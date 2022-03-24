@@ -27,14 +27,15 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('stick', new URL('../../assets/log-with-roses.png', import.meta.url).href);
     this.load.image('bird', new URL('../../assets/bird.png', import.meta.url).href);
     this.load.image('ground',new URL('../../assets/shrexy-ground1.png', import.meta.url).href);
+    this.load.spritesheet('shrekanim', new URL('../../assets/shrekrun.png', import.meta.url).href,{   frameWidth: 84, frameHeight: 84});
+
   }
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
-  create() {
+  create() {  
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
     this.ground = this.add.tileSprite(this.game.config.width/2, this.game.config.height, 1152, 108, 'ground');
-
 
     this.ground.setOrigin(0.5, 1);
     this.physics.world.enable(this.ground);
@@ -44,7 +45,7 @@ export default class GameScene extends Phaser.Scene {
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
     this.obstacles.add(new LogObstacle(this, this.game.config.width,  this.game.config.height - 143));
     this.obstacles.add(new LogObstacle(this, 20,  this.game.config.height - 143));
-    this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 2));
+    this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
 
@@ -56,25 +57,41 @@ export default class GameScene extends Phaser.Scene {
       }
       if (b.type === 'bird')
       {
+        console.log('reachme 00')
         b.destroy();
-        this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 2));
+        this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
       }
       this.tries += 1;
       if (this.tries === 3){
         this.isAlive = false;
         this.tries = 0;
       }
-      // console.log(this.tries)
-
     });
+    this.getAnim();
   }
 
   update() {
+    this.player.anims.play('run', true);
     this.player.update();
     this.generateObstacle();
     this.gameOver();
     this.background.tilePositionX += 2;
     this.ground.tilePositionX += 3;
+  }
+
+  getAnim(){
+    this.anims.create({
+      key: 'run',
+      frames: [
+        { key: 'shrekanim', frame: 0 },
+        { key: 'shrekanim', frame: 1 },
+        { key: 'shrekanim', frame: 2 },
+        { key: 'shrekanim', frame: 3 },
+        { key: 'shrekanim', frame: 4 },],
+      frameRate: 10,
+      repeat: 0
+
+    });
   }
 
 
@@ -87,9 +104,9 @@ export default class GameScene extends Phaser.Scene {
       if (obstacle.getBounds().right < 0) {
         obstacle.setXPosition(this.game.config.width * 1.5);
 
-        //The bird sprite approaches shrek at a const y-axis base with a starting speed
+        //The bird sprite approaches shrek at a const y-axis with a starting speed
         if (obstacle.type === "bird") {
-          obstacle.y = this.game.config.height / 2;
+          obstacle.y = this.game.config.height / 1.85;
         }
       }
     });

@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { dimensions } from '../constants';
 
-export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
+export default class LogObstacle extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) { 
     super(scene, x, y, 'stick');
     scene.add.existing(this);

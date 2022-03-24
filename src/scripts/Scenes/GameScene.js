@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../Sprites/Player';
-import Obstacle from '../Sprites/Obstacle';
+import LogObstacle from '../Sprites/LogObstacle';
 import BirdObstacle from '../Sprites/BirdObstacle';
 
 export default class GameScene extends Phaser.Scene {
@@ -24,7 +24,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('shrek-standing', new URL('../../assets/newshrek.png', import.meta.url).href);
     this.load.image('shrek-crouching', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
     this.load.image('bg1',new URL('../../assets/shrexy-bg4.png', import.meta.url).href);
-    this.load.image('stick', new URL('../../assets/log.png', import.meta.url).href);
+    this.load.image('stick', new URL('../../assets/log-with-roses.png', import.meta.url).href);
     this.load.image('bird', new URL('../../assets/bird.png', import.meta.url).href);
     this.load.image('ground',new URL('../../assets/shrexy-ground1.png', import.meta.url).href);
   }
@@ -42,7 +42,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.obstacles = this.physics.add.group(); 
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    this.obstacles.add(new Obstacle(this, this.game.config.width,  this.game.config.height - 143));
+    this.obstacles.add(new LogObstacle(this, this.game.config.width,  this.game.config.height - 143));
+    this.obstacles.add(new LogObstacle(this, 20,  this.game.config.height - 143));
     this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 2));
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
@@ -51,7 +52,7 @@ export default class GameScene extends Phaser.Scene {
       if (b.type === 'stick')
       {
         b.destroy();
-        this.obstacles.add(new Obstacle(this, this.game.config.width,  this.game.config.height - 143));
+        this.obstacles.add(new LogObstacle(this, this.game.config.width,  this.game.config.height - 143));
       }
       if (b.type === 'bird')
       {

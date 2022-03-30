@@ -18,16 +18,17 @@ export default class GameScene extends Phaser.Scene {
     this.birdObstacles;
     this.isAlive = true;
     this.tries = 0;
+    this.timerEvent;
+    this.randObstacle;
   }
 
   preload() {
-    this.load.image('shrek-standing', new URL('../../assets/newshrek.png', import.meta.url).href);
-    this.load.image('shrek-crouching', new URL('../../assets/shrek-crouch.png', import.meta.url).href);
     this.load.image('bg1',new URL('../../assets/shrexy-bg4.png', import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log-with-roses.png', import.meta.url).href);
-    this.load.image('bird', new URL('../../assets/bird.png', import.meta.url).href);
     this.load.image('ground',new URL('../../assets/shrexy-ground1.png', import.meta.url).href);
     this.load.spritesheet('shrekanim', new URL('../../assets/shrekrun.png', import.meta.url).href,{   frameWidth: 84, frameHeight: 84});
+    this.load.spritesheet('birdanim', new URL('../../assets/birdsheet.png', import.meta.url).href,{   frameWidth: 144, frameHeight: 144});
+
 
   }
 
@@ -41,13 +42,20 @@ export default class GameScene extends Phaser.Scene {
     this.physics.world.enable(this.ground);
     this.ground.body.setImmovable(true);
 
-    this.obstacles = this.physics.add.group(); 
+    this.obstacles = this.physics.add.group();
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    this.obstacles.add(new LogObstacle(this, this.game.config.width,  this.game.config.height - 143));
-    this.obstacles.add(new LogObstacle(this, 20,  this.game.config.height - 143));
-    this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
+    // this.timerEvent = this.scene.time.add({
+    //   delay: 3000
+    // })
+
+
+    console.log(this.timerEvent);
+
+    // this.obstacles.add(new LogObstacle(this, 20,  this.game.config.height - 143));
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
+    this.timerEvent = this.time.delayedCall((Phaser.Math.Between(2, 7) * 1000), this.generateObstacle, [this.obstacles], this);
+
 
     this.physics.add.collider(this.player, this.obstacles, (a, b) => {
       if (b.type === 'stick')
@@ -57,7 +65,6 @@ export default class GameScene extends Phaser.Scene {
       }
       if (b.type === 'bird')
       {
-        console.log('reachme 00')
         b.destroy();
         this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
       }
@@ -71,12 +78,48 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+
+    this.obstacles.getChildren().forEach((obstacle) => {
+      if (obstacle.type === "bird") {
+        obstacle.anims.play('fly', true);
+      }
+    });
     this.player.anims.play('run', true);
     this.player.update();
-    this.generateObstacle();
+    this.moveObstacle();
     this.gameOver();
-    this.background.tilePositionX += 2;
-    this.ground.tilePositionX += 3;
+    this.background.tilePositionX += 12;
+    this.ground.tilePositionX += 15;
+  }
+
+  moveObstacle(){
+    //The stick sprite approaches Shrek at an x-axis with a starting speed
+    Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
+
+    this.obstacles.getChildren().forEach((obstacle) => {
+      // obstacle.setImmovable(true)
+      if (obstacle.getBounds().right < 0) {
+        obstacle.setXPosition(this.game.config.width * 1.5);
+
+        //The bird sprite approaches shrek at a const y-axis with a starting speed
+        if (obstacle.type === "bird") {
+          obstacle.y = this.game.config.height / 1.85;
+
+        }
+      }
+    });
+  }
+
+  generateObstacle(){
+    // this.scene.time.events.add(TIME,  () => { console.log(TIME)}, this);
+    // this.game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
+    // this.randObstacle = Phaser.Math.Between(1, 2);
+    // console.log(this.randObstacle);
+    // if (this.randObstacle === 1){
+      this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
+    // }else{
+      this.obstacles.add(new LogObstacle(this, this.game.config.width,  this.game.config.height - 143));
+    // }
   }
 
   getAnim(){
@@ -90,28 +133,24 @@ export default class GameScene extends Phaser.Scene {
         { key: 'shrekanim', frame: 4 },],
       frameRate: 10,
       repeat: 0
+    });
+
+    this.anims.create({
+      key: 'fly',
+      frames: [
+        { key: 'birdanim', frame: 0 },
+        { key: 'birdanim', frame: 1 },
+        { key: 'birdanim', frame: 2 },
+        { key: 'birdanim', frame: 3 },
+        { key: 'birdanim', frame: 4 },
+        { key: 'birdanim', frame: 5 },
+        { key: 'birdanim', frame: 6 },
+        { key: 'birdanim', frame: 7 },],
+      frameRate: 10,
+      repeat: 0
 
     });
   }
-
-
-  generateObstacle(){
-    //The stick sprite approaches Shrek at an x-axis with a starting speed
-    Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
-
-    this.obstacles.getChildren().forEach((obstacle) => {
-      obstacle.setImmovable(true)
-      if (obstacle.getBounds().right < 0) {
-        obstacle.setXPosition(this.game.config.width * 1.5);
-
-        //The bird sprite approaches shrek at a const y-axis with a starting speed
-        if (obstacle.type === "bird") {
-          obstacle.y = this.game.config.height / 1.85;
-        }
-      }
-    });
-  }
-
   //If the Game Over screen is up; allow option for player to play again, or to access the shop
   gameOver(){
     if (this.isAlive == false){
@@ -121,11 +160,17 @@ export default class GameScene extends Phaser.Scene {
     this.isAlive = true;
   }
 
+}
+
+  /* 
+  1. generate obstacle from obj source
+  2. randomize the wait time between obstacle generation
+  3. randomize the type of obstalce being generated
+
 
   //Input Knights.png in the side of the frame
 
   //Increase the score count based on the amount of coins collected or whilst collected.
-
 
   //if player is in Shop, allow option to exit or buy
 
@@ -157,5 +202,4 @@ export default class GameScene extends Phaser.Scene {
 
   //If player is done playing, after either an "Back" or an "Game over"; give access to an "Quit" button to exit the game
 
-  // If the Quit button is clicked, shut down all service of the game
-}
+  // If the Quit button is clicked, shut down all service of the game*/

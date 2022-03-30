@@ -8,9 +8,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.world.enableBody(this);
     this.setGravityY(4000);
     this.setCollideWorldBounds(true);
-    this.setScale(1, 1.5);
-    this.setOrigin(0.5, 1);
-    this.setSize(75, 275)
+    this.setScale(2.5, 3.5);
+    // this.setOrigin(0.5, 1);
+    this.setSize(50, 75)
 
     this.cursors = scene.input.keyboard.createCursorKeys();
 
@@ -27,22 +27,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (pressingUp && onFloor) {
       // this.setTexture('shrek-standing');
       this.setVelocityY(-1400);
-      // this.setDisplaySize(180, 275);
+      this.setDisplaySize(200, 300);
     }
     else if (pressingDown && onFloor) {
       // this.setTexture('shrek-crouching');
-      this.setDisplaySize(180, 150);
+      this.setDisplaySize(200, 250);
      
     }
     else if (pressingDown && !onFloor) {
       // this.setTexture('shrek-crouching');
       this.setVelocityY(1400);
-      // this.setDisplaySize(100, 75);
+      this.setDisplaySize(200, 250);
     }
 
     else if (!pressingDown && onFloor) {
       // this.setTexture('shrek-standing');
-      // this.setDisplaySize(180, 275);
+      // this.setDisplaySize(150, 300);
     }
   }
 }

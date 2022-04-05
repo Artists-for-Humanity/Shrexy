@@ -20,8 +20,10 @@ export default class GameScene extends Phaser.Scene {
     this.birdObstacles;
     this.isAlive = true;
     this.tries = 0;
-    this.timerEvent = 0;
     this.randObstacle;
+
+    // Variables for score timer
+    this.timerEvent = 0;
     this.tick = false;
     this.score = 0;
     this.scoreText;
@@ -104,7 +106,6 @@ export default class GameScene extends Phaser.Scene {
   update(time, delta) {
     this.timerEvent += delta;
     this.timer();
-    this.setScoreText();
     // console.log(this.timedEvent.getProgress().toPrecision(1) * 10) 
     // if (this.timedEvent.getProgress().toPrecision(1) * 10 === 10) {
     //   this.timedEvent.reset()
@@ -124,7 +125,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   setScoreText() {
-    console.log('hello')
+    // console.log('hello')
     this.scoreText.setText('SCORE: ' + this.score)
   }
 
@@ -132,11 +133,12 @@ export default class GameScene extends Phaser.Scene {
     if (this.tick === false) {
       console.log(this.score);
       this.score += 1;
+      this.setScoreText();
       this.tick = true;
       this.timerEvent = 0;
     }
-    if (this.tick === true && this.timerEvent > 1000) {
-      this.timerEvent -= 1000;
+    if (this.tick === true && this.timerEvent > 500) {
+      this.timerEvent -= 500;
       this.tick = false;
     }
   }

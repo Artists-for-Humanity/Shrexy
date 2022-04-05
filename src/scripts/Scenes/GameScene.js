@@ -18,8 +18,11 @@ export default class GameScene extends Phaser.Scene {
     this.birdObstacles;
     this.isAlive = true;
     this.tries = 0;
-    this.timerEvent;
+    this.timerEvent = 0;
     this.randObstacle;
+    this.timeCheck = false;
+    // this.numObstacles = 0;
+
   }
 
   preload() {
@@ -54,21 +57,21 @@ export default class GameScene extends Phaser.Scene {
 
     this.obstacles = this.physics.add.group();
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-    
 
 
-    console.log(this.timerEvent);
+
+    // console.log(this.timerEvent);
 
     // this.obstacles.add(new LogObstacle(this, 20,  this.game.config.height - 143));
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
-    this.timerEvent = this.time.delayedCall((Phaser.Math.Between(2, 7) * 1000), this.generateObstacle, [this.obstacles], this);
+    // this.timerEvent = this.time.delayedCall((Phaser.Math.Between(2, 7) * 1000), this.generateObstacle, [this.obstacles], this);
 
 
     this.physics.add.collider(this.player, this.obstacles, (a, b) => {
       if (b.type === 'stick') {
         b.destroy();
-        this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
+        this.obstacles.add(new LogObstacle(this, this.game.config.width * 2, this.game.config.height - 143));
       }
       if (b.type === 'bird') {
         b.destroy();
@@ -83,8 +86,10 @@ export default class GameScene extends Phaser.Scene {
     this.getAnim();
   }
 
-  update() {
-
+  update(time, delta) {
+    this.timerEvent += delta;
+    // console.log(this.timerEvent)
+    this.timer();
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.type === "bird") {
         obstacle.anims.play('fly', true);
@@ -94,8 +99,24 @@ export default class GameScene extends Phaser.Scene {
     this.player.update();
     this.moveObstacle();
     this.gameOver();
-    this.background.tilePositionX += 12;
-    this.ground.tilePositionX += 15;
+    this.background.tilePositionX += this.gameSpeed * .85;
+    this.ground.tilePositionX += this.gameSpeed;
+  }
+
+  timer() {
+    // this.physics.add.overlap(this.player, this.enemies, () => {
+    if (this.timeCheck === false) {
+      this.generateObstacle();
+      console.log(this.obstacles)
+      this.timeCheck = true;
+      this.timerEvent = 0;
+    }
+    if (this.timeCheck === true && this.timerEvent > (Phaser.Math.Between(1, 4) * 1000)) {
+      // this.timerEvent -=  3000;
+      this.timeCheck = false;
+    }
+    // });
+
   }
 
   moveObstacle() {
@@ -105,11 +126,13 @@ export default class GameScene extends Phaser.Scene {
     this.obstacles.getChildren().forEach((obstacle) => {
       // obstacle.setImmovable(true)
       if (obstacle.getBounds().right < 0) {
-        obstacle.setXPosition(this.game.config.width * 1.5);
+        // obstacle.setXPosition(this.game.config.width * 1.5);
+        obstacle.destroy()
 
         //The bird sprite approaches shrek at a const y-axis with a starting speed
         if (obstacle.type === "bird") {
-          obstacle.y = this.game.config.height / 1.85;
+          // obstacle.y = this.game.config.height / 1.85;
+          obstacle.destroy();
 
         }
       }
@@ -117,41 +140,41 @@ export default class GameScene extends Phaser.Scene {
   }
 
   generateObstacle() {
-    // this.scene.time.events.add(TIME,  () => { console.log(TIME)}, this);
-    // this.game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
+    // this.numObstacles++
     this.randObstacle = Phaser.Math.Between(1, 2);
-    // console.log(this.randObstacle);
+    console.log(this.randObstacle);
     if (this.randObstacle === 1) {
       this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
     } else {
       this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
-      // }
     }
+    // console.log('reachme 00')
+
   }
 
   getAnim() {
     this.anims.create({
       key: 'run',
       frames: [{
-        key: 'shrekanim',
-        frame: 0
-      },
-      {
-        key: 'shrekanim',
-        frame: 1
-      },
-      {
-        key: 'shrekanim',
-        frame: 2
-      },
-      {
-        key: 'shrekanim',
-        frame: 3
-      },
-      {
-        key: 'shrekanim',
-        frame: 4
-      },
+          key: 'shrekanim',
+          frame: 0
+        },
+        {
+          key: 'shrekanim',
+          frame: 1
+        },
+        {
+          key: 'shrekanim',
+          frame: 2
+        },
+        {
+          key: 'shrekanim',
+          frame: 3
+        },
+        {
+          key: 'shrekanim',
+          frame: 4
+        },
       ],
       frameRate: 10,
       repeat: 0
@@ -160,37 +183,37 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: 'fly',
       frames: [{
-        key: 'birdanim',
-        frame: 0
-      },
-      {
-        key: 'birdanim',
-        frame: 1
-      },
-      {
-        key: 'birdanim',
-        frame: 2
-      },
-      {
-        key: 'birdanim',
-        frame: 3
-      },
-      {
-        key: 'birdanim',
-        frame: 4
-      },
-      {
-        key: 'birdanim',
-        frame: 5
-      },
-      {
-        key: 'birdanim',
-        frame: 6
-      },
-      {
-        key: 'birdanim',
-        frame: 7
-      },
+          key: 'birdanim',
+          frame: 0
+        },
+        {
+          key: 'birdanim',
+          frame: 1
+        },
+        {
+          key: 'birdanim',
+          frame: 2
+        },
+        {
+          key: 'birdanim',
+          frame: 3
+        },
+        {
+          key: 'birdanim',
+          frame: 4
+        },
+        {
+          key: 'birdanim',
+          frame: 5
+        },
+        {
+          key: 'birdanim',
+          frame: 6
+        },
+        {
+          key: 'birdanim',
+          frame: 7
+        },
       ],
       frameRate: 10,
       repeat: 0

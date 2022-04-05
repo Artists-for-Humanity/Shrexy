@@ -42,7 +42,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     else if (!pressingDown && onFloor) {
       // this.setTexture('shrek-standing');
-      // this.setDisplaySize(150, 300);
+      this.setDisplaySize(200, 250);
     }
   }
 }

@@ -8,14 +8,14 @@ super({ key: 'MenuScene' });
   }
 
   preload() {   
-  this.load.image('background-3',new URL('../../assets/background-shrekshouse.png', import.meta.url).href);
+  this.load.image('background-3',new URL('../../assets/menu.png', import.meta.url).href);
   this.load.image('logo',new URL('../../assets/shrexy_logo.png', import.meta.url).href);
 
 }
 
   create() {
-    this.add.image(this.game.config.width / 2, this.game.config.height / 2,  'background-3');
-    this.add.image(this.game.config.width / 2, this.game.config.height / 3, 'logo').setScale(.5, .5);
+    this.add.image(this.game.config.width / 2, this.game.config.height * .45,  'background-3').setScale(1.1, 1.1);
+    this.add.image(this.game.config.width / 2, this.game.config.height * .4, 'logo').setScale(.4, .4);
 
     WebFont.load({
       custom: {
@@ -23,7 +23,7 @@ super({ key: 'MenuScene' });
       },
       active: () => {
         this.add
-          .text(this.game.config.width / 2, this.game.config.height * (2 / 3), 'Press Up arrow to Play', {
+          .text(this.game.config.width / 2, this.game.config.height * .7, 'Press Up arrow to Play', {
             fontFamily: 'Slackey',
             fontSize: '35px',
             fill: colors.white,

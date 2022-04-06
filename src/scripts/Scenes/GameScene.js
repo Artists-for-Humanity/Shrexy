@@ -71,11 +71,11 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.obstacles, (a, b) => {
       if (b.type === 'stick') {
         b.destroy();
-        this.obstacles.add(new LogObstacle(this, this.game.config.width * 2, this.game.config.height - 143));
+        // this.obstacles.add(new LogObstacle(this, this.game.config.width * 2, this.game.config.height - 143));
       }
       if (b.type === 'bird') {
         b.destroy();
-        this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
+        // this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
       }
       this.tries += 1;
       if (this.tries === 3) {
@@ -107,7 +107,7 @@ export default class GameScene extends Phaser.Scene {
     // this.physics.add.overlap(this.player, this.enemies, () => {
     if (this.timeCheck === false) {
       this.generateObstacle();
-      console.log(this.obstacles)
+      // console.log(this.obstacles)
       this.timeCheck = true;
       this.timerEvent = 0;
     }
@@ -142,9 +142,9 @@ export default class GameScene extends Phaser.Scene {
   generateObstacle() {
     // this.numObstacles++
     this.randObstacle = Phaser.Math.Between(1, 2);
-    console.log(this.randObstacle);
+    // console.log(this.randObstacle);
     if (this.randObstacle === 1) {
-      this.obstacles.add(new BirdObstacle(this, this.game.config.width * 2, this.game.config.height / 1.85));
+      this.obstacles.add(new BirdObstacle(this, this.game.config.width , this.game.config.height / 1.85));
     } else {
       this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
     }

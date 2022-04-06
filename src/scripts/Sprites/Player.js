@@ -16,26 +16,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     return this;
   }
-  // Player clicking the UP key to jump up
 
-  //Player clicking the DOWN key to crouch down
+  // Player clicking the UP and DOWN keys to jump up and to crouch
   update() {
     const pressingUp = this.cursors.up.isDown;
     const pressingDown = this.cursors.down.isDown;
     const onFloor = this.body.onFloor();
 
     if (pressingUp && onFloor) {
-      // this.setTexture('shrek-standing');
       this.setVelocityY(-1400);
       this.setDisplaySize(200, 300);
     }
-    else if (pressingDown && onFloor) {
-      // this.setTexture('shrek-crouching');
+    if (pressingDown && onFloor) {
       this.setDisplaySize(200, 250);
-     
     }
-    else if (pressingDown && !onFloor) {
-      // this.setTexture('shrek-crouching');
+    if (pressingDown && !onFloor) {
       this.setVelocityY(1400);
       this.setDisplaySize(200, 250);
     }

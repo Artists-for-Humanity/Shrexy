@@ -24,15 +24,6 @@ export default class BirdObstacle extends Phaser.Physics.Arcade.Sprite {
   // }
 
   setYPosition(val1, val2) {
-    // if (this.y >= val1){
-    //   Phaser.Actions.IncY(this, -this.gameSpeed * .067);
-      console.log('hello');
-      console.log(this);
-
-    // }
-    // if (this.y <= val2){
-    //   Phaser.Actions.IncY(this, this.gameSpeed * .067);
-    // }
     if (this.y <= val2) {
       // this.setVelocityY(3);
       this.y += 3;

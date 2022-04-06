@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import MenuScene from './Scenes/MenuScene';
 import GameScene from './Scenes/GameScene';
 import { dimensions } from './constants';
+import GameOverScene from './Scenes/GameOverScene';
 
 // Set configuration for phaser game instance
 const config = {
@@ -16,7 +17,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [MenuScene, GameScene],
+  scene: [MenuScene, GameScene, GameOverScene],
   audio: {
     disableWebAudio: true,
   },

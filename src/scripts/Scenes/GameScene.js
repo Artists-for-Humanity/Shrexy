@@ -263,7 +263,7 @@ export default class GameScene extends Phaser.Scene {
   //If the Game Over screen is up; allow option for player to play again, or to access the shop
   gameOver() {
     if (this.isAlive == false) {
-      this.scene.start('MenuScene');
+      this.scene.start('GameOverScene');
       // console.log('DONKEH!!');
     }
     this.isAlive = true;

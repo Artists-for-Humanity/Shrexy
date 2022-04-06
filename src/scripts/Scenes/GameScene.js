@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import Player from '../Sprites/Player';
 import LogObstacle from '../Sprites/LogObstacle';
 import BirdObstacle from '../Sprites/BirdObstacle';
+import Coin from '..//Sprites/Coin.js';
 import {
   colors
 } from '../constants';
@@ -20,7 +21,8 @@ export default class GameScene extends Phaser.Scene {
     this.birdObstacles;
     this.isAlive = true;
     this.tries = 0;
-    this.randObstacle;
+    this.randObject;
+    this.coins;
 
     // Variables for score timer
     this.timerEvent = 0;
@@ -28,7 +30,7 @@ export default class GameScene extends Phaser.Scene {
     this.tick = false;
     this.score = 0;
     this.scoreText;
-    this.randObstacle;
+    this.randObject;
     this.timeCheck = false;
     // this.numObstacles = 0;
 
@@ -51,7 +53,11 @@ export default class GameScene extends Phaser.Scene {
       frameWidth: 144,
       frameHeight: 144
     });
-
+    this.load.spritesheet('coinanim', new URL('../../assets/coin.png',
+      import.meta.url).href, {
+      frameWidth: 56,
+      frameHeight: 62
+    });
   }
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
@@ -70,8 +76,16 @@ export default class GameScene extends Phaser.Scene {
     this.obstacles = this.physics.add.group();
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
 
+    this.coins = this.physics.add.group()
+    this.physics.add.collider(this.player, this.coins, (a, b) => {
+      this.score += 10;
+      b.destroy();
+    });
+
+
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
+    this.physics.add.collider(this.coins, this.ground);
 
 
     this.physics.add.collider(this.player, this.obstacles, (a, b) => {
@@ -116,7 +130,7 @@ export default class GameScene extends Phaser.Scene {
     });
     this.player.anims.play('run', true);
     this.player.update();
-    this.moveObstacle();
+    this.moveObject();
     this.gameOver();
     this.background.tilePositionX += this.gameSpeed * .85;
     this.ground.tilePositionX += this.gameSpeed;
@@ -125,7 +139,7 @@ export default class GameScene extends Phaser.Scene {
   spawner() {
     // this.physics.add.overlap(this.player, this.enemies, () => {
     if (this.timeCheck === false) {
-      this.generateObstacle();
+      this.generateObject();
       // console.log(this.obstacles)
       this.timeCheck = true;
       this.timerEvent2 = 0;
@@ -157,16 +171,17 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  moveObstacle() {
+  moveObject() {
     //The stick sprite approaches Shrek at an x-axis with a starting speed
     Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
+    Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
 
       //The bird sprite approaches shrek from the sky or from the ground
       if (obstacle.type === "bird") {
         // if (obstacle.y >= this.game.config.height / 1.85){
-          obstacle.setYPosition(this.game.config.height / 1.85, this.game.config.height - 143)
+        obstacle.setYPosition(this.game.config.height / 1.85, this.game.config.height - 143)
         // }
         // else{
         // obstacle.setYPosition(this.game.config.height - 143, this.game.config.height / 1.85)
@@ -180,16 +195,15 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  generateObstacle() {
-    this.randObstacle = Phaser.Math.Between(1, 2);
-    if (this.randObstacle === 1) {
+  generateObject() {
+    this.randObject = Phaser.Math.Between(1, 3);
+    if (this.randObject === 1) {
       this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height / 1.85));
-    } else if (this.randObstacle === 2) {
+    } else if (this.randObject === 2) {
       this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
-    } 
-    // else {
-    //   this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height - 143));
-    // }
+    } else if (this.randObject === 3) {
+      this.coins.add(new Coin(this, this.game.config.width, this.game.config.height - 143));
+    }
   }
 
   getAnim() {

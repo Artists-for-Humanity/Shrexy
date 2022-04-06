@@ -2,6 +2,9 @@ import Phaser from 'phaser';
 import Player from '../Sprites/Player';
 import LogObstacle from '../Sprites/LogObstacle';
 import BirdObstacle from '../Sprites/BirdObstacle';
+import {
+  colors
+} from '../constants';
 
 export default class GameScene extends Phaser.Scene {
   player;
@@ -11,14 +14,19 @@ export default class GameScene extends Phaser.Scene {
     super({
       key: 'GameScene',
     });
-
     this.gameSpeed = 15;
     this.obstacles;
     this.ground;
     this.birdObstacles;
     this.isAlive = true;
     this.tries = 0;
+    this.randObstacle;
+
+    // Variables for score timer
     this.timerEvent = 0;
+    this.tick = false;
+    this.score = 0;
+    this.scoreText;
     this.randObstacle;
     this.timeCheck = false;
     // this.numObstacles = 0;
@@ -47,6 +55,9 @@ export default class GameScene extends Phaser.Scene {
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
   create() {
+
+    // this.timedEvent = this.time.delayedCall(3000, ()=>{}, [], this);
+   
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
     this.ground = this.add.tileSprite(this.game.config.width / 2, this.game.config.height, 1152, 108, 'ground');
@@ -57,8 +68,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.obstacles = this.physics.add.group();
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);
-
-
 
     // console.log(this.timerEvent);
 
@@ -71,6 +80,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.obstacles, (a, b) => {
       if (b.type === 'stick') {
         b.destroy();
+//         this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
         // this.obstacles.add(new LogObstacle(this, this.game.config.width * 2, this.game.config.height - 143));
       }
       if (b.type === 'bird') {
@@ -83,13 +93,22 @@ export default class GameScene extends Phaser.Scene {
         this.tries = 0;
       }
     });
-    this.getAnim();
+    this.getAnim(); 
+    
+    this.scoreText = this.add.text(160, 12, '', {
+      fontFamily: 'Space Mono',
+      fontSize: '24px',
+      fontStyle: 'bold',
+      fill: colors.black,
+      align: 'center',
+    });
   }
 
   update(time, delta) {
     this.timerEvent += delta;
-    // console.log(this.timerEvent)
     this.timer();
+
+    this.spawner();
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.type === "bird") {
         obstacle.anims.play('fly', true);
@@ -103,7 +122,7 @@ export default class GameScene extends Phaser.Scene {
     this.ground.tilePositionX += this.gameSpeed;
   }
 
-  timer() {
+  spawner() {
     // this.physics.add.overlap(this.player, this.enemies, () => {
     if (this.timeCheck === false) {
       this.generateObstacle();
@@ -117,6 +136,25 @@ export default class GameScene extends Phaser.Scene {
     }
     // });
 
+  }
+
+  setScoreText() {
+    // console.log('hello')
+    this.scoreText.setText('SCORE: ' + this.score)
+  }
+
+  timer() {
+    if (this.tick === false) {
+      console.log(this.score);
+      this.score += 1;
+      this.setScoreText();
+      this.tick = true;
+      this.timerEvent = 0;
+    }
+    if (this.tick === true && this.timerEvent > 500) {
+      this.timerEvent -= 500;
+      this.tick = false;
+    }
   }
 
   moveObstacle() {
@@ -140,6 +178,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   generateObstacle() {
+   
     // this.numObstacles++
     this.randObstacle = Phaser.Math.Between(1, 2);
     // console.log(this.randObstacle);
@@ -229,6 +268,7 @@ export default class GameScene extends Phaser.Scene {
     this.isAlive = true;
   }
 }
+
 
 /* 
 1. generate obstacle from obj source

@@ -1,5 +1,7 @@
 const colors = {
   white: '#ffffff',
+  shrexyGreen: '#537f01',
+  escapeGold: '#876719'
 };
 
 const dimensions = {

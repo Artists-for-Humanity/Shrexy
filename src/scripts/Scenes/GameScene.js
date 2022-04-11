@@ -48,10 +48,10 @@ export default class GameScene extends Phaser.Scene {
       frameWidth: 84,
       frameHeight: 84
     });
-    this.load.spritesheet('birdanim', new URL('../../assets/birdsheet.png',
+    this.load.spritesheet('birdanim', new URL('../../assets/owl-spreadsheet_ccexpress.png',
       import.meta.url).href, {
-      frameWidth: 144,
-      frameHeight: 144
+      frameWidth: 150,
+      frameHeight: 120
     });
     this.load.spritesheet('coinanim', new URL('../../assets/coin.png',
       import.meta.url).href, {
@@ -196,12 +196,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   generateObject() {
-    this.randObject = Phaser.Math.Between(1, 3);
+    this.randObject = Phaser.Math.Between(1, 4);
     if (this.randObject === 1) {
       this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height / 1.85));
-    } else if (this.randObject === 2) {
+    }else if (this.randObject === 2) {
+      this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height - 143));
+    }  
+    else if (this.randObject === 3) {
       this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
-    } else if (this.randObject === 3) {
+    } else if (this.randObject === 4) {
       this.coins.add(new Coin(this, this.game.config.width, this.game.config.height - 143));
     }
   }
@@ -251,22 +254,6 @@ export default class GameScene extends Phaser.Scene {
         {
           key: 'birdanim',
           frame: 3
-        },
-        {
-          key: 'birdanim',
-          frame: 4
-        },
-        {
-          key: 'birdanim',
-          frame: 5
-        },
-        {
-          key: 'birdanim',
-          frame: 6
-        },
-        {
-          key: 'birdanim',
-          frame: 7
         },
       ],
       frameRate: 10,

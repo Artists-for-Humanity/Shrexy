@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
 import WebFont from 'webfontloader';
-import {
-  colors
-} from '../constants';
+
 
 export default class GameOverScene extends Phaser.Scene {
   constructor() {
@@ -14,6 +12,7 @@ export default class GameOverScene extends Phaser.Scene {
   preload() {
     this.load.image('GameOver', new URL('../../assets/gameover.png',
       import.meta.url).href);
+
   }
 
   create() {

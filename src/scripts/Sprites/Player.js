@@ -31,9 +31,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     if (pressingDown && !onFloor) {
       this.setVelocityY(1400);
-      // this.setDisplaySize(200, 300);
     } else if (!pressingDown && onFloor) {
-      // this.setDisplaySize(200, 300);
     }
   }
 }

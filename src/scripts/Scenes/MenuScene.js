@@ -16,12 +16,16 @@ export default class MenuScene extends Phaser.Scene {
       import.meta.url).href);
     this.load.image('logo', new URL('../../assets/shrexy_logo.png',
       import.meta.url).href);
+    this.load.image('lilypad', new URL('../../assets/lilypad.png',
+      import.meta.url).href);
+    this.load.image('rock', new URL('../../assets/rock.png',
+      import.meta.url).href);
 
   }
 
   create() {
     this.add.image(this.game.config.width / 2, this.game.config.height * .425, 'background-3').setScale(1.1, 1.1);
-    // this.add.image(this.game.config.width / 2, this.game.config.height * .4, 'logo').setScale(.4, .4);
+    this.add.image(this.game.config.width / 2, this.game.config.height * .425, 'lilypad').setScale(0.5, 0.5);
 
     WebFont.load({
       custom: {

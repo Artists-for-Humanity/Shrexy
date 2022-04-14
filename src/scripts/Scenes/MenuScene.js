@@ -20,16 +20,14 @@ export default class MenuScene extends Phaser.Scene {
       import.meta.url).href);
     this.load.image('rock', new URL('../../assets/rock.png',
       import.meta.url).href);
-
   }
 
   create() {
     this.add.image(this.game.config.width / 2, this.game.config.height * .425, 'background-3').setScale(1.1, 1.1);
     this.play = this.add.image(this.game.config.width / 3.5, this.game.config.height * .45, 'lilypad').setScale(0.9, 0.9);
 
-    var button = this.add.image(this.game.config.width * .7, this.game.config.height * .45, 'rock').setInteractive();
+    var button = this.add.image(this.game.config.width * .68, this.game.config.height * .49, 'rock').setInteractive().setScale(1.3, 1.3);
     button.on('pointerdown', () => {
-      console.log('hello');
       var url = 'index.html';
       var s = window.open(url, '_blank');
       if (s && s.focus) {
@@ -37,15 +35,7 @@ export default class MenuScene extends Phaser.Scene {
       } else if (!s) {
         window.location.href = url;
       }
-
-      console.log(s);
-
-
-
     });
-
-
-    // button.on('pointerdown', this.openExternalLink(), this);
 
     WebFont.load({
       custom: {
@@ -91,7 +81,7 @@ export default class MenuScene extends Phaser.Scene {
             }
           })
           .setOrigin(0.5, 1.7);
-          this.add.text(this.game.config.width * .7, this.game.config.height * .63, 'Back to \nShrexy Page', {
+        this.add.text(this.game.config.width * .7, this.game.config.height * .63, 'Back to \nShrexy Page', {
             fontFamily: 'Luminari Regular',
             fontSize: '50px',
             fill: colors.white,
@@ -116,16 +106,4 @@ export default class MenuScene extends Phaser.Scene {
       this.scene.start('GameScene');
     });
   }
-
-  // openExternalLink() {
-  //   // var tweet = 'I am testing a button from within a Phaser example';
-  //   var url = 'google.com';
-  //   var s = window.open(url, '_blank');
-
-  //   if (s && s.focus) {
-  //     s.focus();
-  //   } else if (!s) {
-  //     window.location.href = url;
-  //   }
-  // }
 }

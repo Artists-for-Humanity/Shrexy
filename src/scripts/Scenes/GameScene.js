@@ -169,9 +169,10 @@ export default class GameScene extends Phaser.Scene {
     Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
-      //The bird sprite approaches shrek from the sky or from the ground
+
+      //The bird sprite approaches shrek from the ground
       if (obstacle.type === "bird") {
-        obstacle.setYPosition(this.game.config.height / 1.85, this.game.config.height - 143)
+          obstacle.setYPositionUp();
       }
       if (obstacle.getBounds().right < 0) {
         obstacle.destroy()
@@ -181,15 +182,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   generateObject() {
-    this.randObject = Phaser.Math.Between(1, 4);
+    this.randObject = Phaser.Math.Between(1, 3);
     if (this.randObject === 1) {
-      this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height / 1.85));
-    }else if (this.randObject === 2) {
-      this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height - 143));
-    }  
-    else if (this.randObject === 3) {
+      this.obstacles.add(new BirdObstacle(this, this.game.config.width + 150, this.game.config.height - 143));
+    }
+    else if (this.randObject === 2) {
+
       this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
-    } else if (this.randObject === 4) {
+    } else if (this.randObject === 3) {
+
       this.coins.add(new Coin(this, this.game.config.width, this.game.config.height - 143));
     }
   }

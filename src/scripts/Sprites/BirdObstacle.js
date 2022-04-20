@@ -4,6 +4,7 @@ export default class BirdObstacle extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
     this.setGravityY(4000);
+
     this.setScale(.75, .75);
     this.type = "bird";
     return this;

@@ -10,6 +10,7 @@ export default class Coin extends Phaser.Physics.Arcade.Sprite {
         this.scaleX = .75;
         this.setSize(100, 50);
         this.type = "coin";
+        this.setScale(1.5,1.5);
 
         return this;
     }

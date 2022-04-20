@@ -32,8 +32,6 @@ export default class GameScene extends Phaser.Scene {
     this.scoreText;
     this.randObject;
     this.timeCheck = false;
-    // this.numObstacles = 0;
-
   }
 
   preload() {
@@ -62,9 +60,6 @@ export default class GameScene extends Phaser.Scene {
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
   create() {
-
-    // this.timedEvent = this.time.delayedCall(3000, ()=>{}, [], this);
-
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
     this.ground = this.add.tileSprite(this.game.config.width / 2, this.game.config.height, 1152, 108, 'ground');
@@ -82,11 +77,9 @@ export default class GameScene extends Phaser.Scene {
       b.destroy();
     });
 
-
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
     this.physics.add.collider(this.coins, this.ground);
-
 
     this.physics.add.collider(this.player, this.obstacles, (a, b) => {
       if (b.type === 'stick') {
@@ -120,15 +113,20 @@ export default class GameScene extends Phaser.Scene {
   update(time, delta) {
     this.timerEvent += delta;
     this.timerEvent2 += delta;
-
     this.timer();
     this.spawner();
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.type === "bird") {
         obstacle.anims.play('fly', true);
+        // console.log(obstacle)
       }
     });
     this.player.anims.play('run', true);
+    // console.log(this.player)
+    // console.log(this.coins)
+    this.coins.getChildren().forEach((coin) => {
+      coin.anims.play('spin', true);
+    });
     this.player.update();
     this.moveObject();
     this.gameOver();
@@ -140,26 +138,20 @@ export default class GameScene extends Phaser.Scene {
     // this.physics.add.overlap(this.player, this.enemies, () => {
     if (this.timeCheck === false) {
       this.generateObject();
-      // console.log(this.obstacles)
       this.timeCheck = true;
       this.timerEvent2 = 0;
     }
     if (this.timeCheck === true && this.timerEvent2 > (Phaser.Math.Between(1, 4) * 1000)) {
-      // this.timerEvent -=  3000;
       this.timeCheck = false;
     }
-    // });
-
   }
 
   setScoreText() {
-    // console.log('hello')
     this.scoreText.setText('SCORE: ' + this.score)
   }
 
   timer() {
     if (this.tick === false) {
-      // console.log(this.score);
       this.score += 1;
       this.setScoreText();
       this.tick = true;
@@ -180,9 +172,7 @@ export default class GameScene extends Phaser.Scene {
 
       //The bird sprite approaches shrek from the ground
       if (obstacle.type === "bird") {
-      
           obstacle.setYPositionUp();
-
       }
       if (obstacle.getBounds().right < 0) {
         obstacle.destroy()
@@ -255,13 +245,68 @@ export default class GameScene extends Phaser.Scene {
       frameRate: 10,
       repeat: 0
     });
+
+    this.anims.create({
+      key: 'spin',
+      frames: [{
+          key: 'coinanim',
+          frame: 0
+        },
+        {
+          key: 'coinanim',
+          frame: 1
+        },
+        {
+          key: 'coinanim',
+          frame: 2
+        },
+        {
+          key: 'coinanim',
+          frame: 3
+        },
+        {
+          key: 'coinanim',
+          frame: 4
+        },
+        {  
+          key: 'coinanim',
+          frame: 6
+        },
+        {  
+          key: 'coinanim',
+          frame: 7
+        },
+        {  
+          key: 'coinanim',
+          frame: 8
+        },
+        {  
+          key: 'coinanim',
+          frame: 9
+        },
+        {  
+          key: 'coinanim',
+          frame: 10
+        },
+        {  
+          key: 'coinanim',
+          frame: 11
+        },
+        {  
+          key: 'coinanim',
+          frame: 12
+        },
+
+      ],
+      frameRate: 10,
+      repeat: 0
+    });
   }
 
   //If the Game Over screen is up; allow option for player to play again, or to access the shop
   gameOver() {
     if (this.isAlive == false) {
       this.scene.start('GameOverScene');
-      // console.log('DONKEH!!');
     }
     this.isAlive = true;
   }

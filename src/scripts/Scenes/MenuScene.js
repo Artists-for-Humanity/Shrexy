@@ -28,7 +28,7 @@ export default class MenuScene extends Phaser.Scene {
         families: ['Slackey'],
       },
       active: () => {
-        this.add.text(this.game.config.width * .5, this.game.config.height * .8, 'Press Up arrow to Play', {
+        this.add.text(this.game.config.width * .5, this.game.config.height * .8, 'Press Up Arrow to Play', {
             fontFamily: 'Luminari Regular',
             fontSize: '60px',
             fill: colors.white,

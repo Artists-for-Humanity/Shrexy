@@ -35,7 +35,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('bg1', new URL('../../assets/shrexy-bg4.png',
+    this.load.image('bg1', new URL('../../assets/Pixel_Art_Forest.png',
       import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log-with-roses.png',
       import.meta.url).href);
@@ -172,7 +172,7 @@ export default class GameScene extends Phaser.Scene {
 
       //The bird sprite approaches shrek from the ground
       if (obstacle.type === "bird") {
-          obstacle.setYPositionUp();
+        obstacle.setYPositionUp();
       }
       if (obstacle.getBounds().right < 0) {
         obstacle.destroy()
@@ -199,25 +199,25 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: 'run',
       frames: [{
-          key: 'shrekanim',
-          frame: 0
-        },
-        {
-          key: 'shrekanim',
-          frame: 1
-        },
-        {
-          key: 'shrekanim',
-          frame: 2
-        },
-        {
-          key: 'shrekanim',
-          frame: 3
-        },
-        {
-          key: 'shrekanim',
-          frame: 4
-        },
+        key: 'shrekanim',
+        frame: 0
+      },
+      {
+        key: 'shrekanim',
+        frame: 1
+      },
+      {
+        key: 'shrekanim',
+        frame: 2
+      },
+      {
+        key: 'shrekanim',
+        frame: 3
+      },
+      {
+        key: 'shrekanim',
+        frame: 4
+      },
       ],
       frameRate: 10,
       repeat: 0
@@ -226,21 +226,21 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: 'fly',
       frames: [{
-          key: 'birdanim',
-          frame: 0
-        },
-        {
-          key: 'birdanim',
-          frame: 1
-        },
-        {
-          key: 'birdanim',
-          frame: 2
-        },
-        {
-          key: 'birdanim',
-          frame: 3
-        },
+        key: 'birdanim',
+        frame: 0
+      },
+      {
+        key: 'birdanim',
+        frame: 1
+      },
+      {
+        key: 'birdanim',
+        frame: 2
+      },
+      {
+        key: 'birdanim',
+        frame: 3
+      },
       ],
       frameRate: 10,
       repeat: 0
@@ -249,53 +249,53 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: 'spin',
       frames: [{
-          key: 'coinanim',
-          frame: 0
-        },
-        {
-          key: 'coinanim',
-          frame: 1
-        },
-        {
-          key: 'coinanim',
-          frame: 2
-        },
-        {
-          key: 'coinanim',
-          frame: 3
-        },
-        {
-          key: 'coinanim',
-          frame: 4
-        },
-        {  
-          key: 'coinanim',
-          frame: 6
-        },
-        {  
-          key: 'coinanim',
-          frame: 7
-        },
-        {  
-          key: 'coinanim',
-          frame: 8
-        },
-        {  
-          key: 'coinanim',
-          frame: 9
-        },
-        {  
-          key: 'coinanim',
-          frame: 10
-        },
-        {  
-          key: 'coinanim',
-          frame: 11
-        },
-        {  
-          key: 'coinanim',
-          frame: 12
-        },
+        key: 'coinanim',
+        frame: 0
+      },
+      {
+        key: 'coinanim',
+        frame: 1
+      },
+      {
+        key: 'coinanim',
+        frame: 2
+      },
+      {
+        key: 'coinanim',
+        frame: 3
+      },
+      {
+        key: 'coinanim',
+        frame: 4
+      },
+      {
+        key: 'coinanim',
+        frame: 6
+      },
+      {
+        key: 'coinanim',
+        frame: 7
+      },
+      {
+        key: 'coinanim',
+        frame: 8
+      },
+      {
+        key: 'coinanim',
+        frame: 9
+      },
+      {
+        key: 'coinanim',
+        frame: 10
+      },
+      {
+        key: 'coinanim',
+        frame: 11
+      },
+      {
+        key: 'coinanim',
+        frame: 12
+      },
 
       ],
       frameRate: 10,

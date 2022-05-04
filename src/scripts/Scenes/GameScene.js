@@ -59,7 +59,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
-  create() {
+  create() { // hello
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
     this.ground = this.add.tileSprite(this.game.config.width / 2, this.game.config.height, 1152, 108, 'ground');
@@ -184,10 +184,9 @@ export default class GameScene extends Phaser.Scene {
     this.randObject = Phaser.Math.Between(1, 4);
     if (this.randObject === 1) {
       this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height / 1.85));
-    }else if (this.randObject === 2) {
+    } else if (this.randObject === 2) {
       this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height - 143));
-    }  
-    else if (this.randObject === 3) {
+    } else if (this.randObject === 3) {
       this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
     } else if (this.randObject === 4) {
       this.coins.add(new Coin(this, this.game.config.width, this.game.config.height - 143));
@@ -267,31 +266,31 @@ export default class GameScene extends Phaser.Scene {
           key: 'coinanim',
           frame: 4
         },
-        {  
+        {
           key: 'coinanim',
           frame: 6
         },
-        {  
+        {
           key: 'coinanim',
           frame: 7
         },
-        {  
+        {
           key: 'coinanim',
           frame: 8
         },
-        {  
+        {
           key: 'coinanim',
           frame: 9
         },
-        {  
+        {
           key: 'coinanim',
           frame: 10
         },
-        {  
+        {
           key: 'coinanim',
           frame: 11
         },
-        {  
+        {
           key: 'coinanim',
           frame: 12
         },

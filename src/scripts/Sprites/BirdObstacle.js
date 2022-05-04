@@ -10,6 +10,7 @@ export default class BirdObstacle extends Phaser.Physics.Arcade.Sprite {
     return this;
   }
 
+  //Update Me
   setYPositionUp() {
     this.y -= 4;
   }

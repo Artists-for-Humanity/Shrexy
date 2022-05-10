@@ -32,12 +32,10 @@ export default class GameScene extends Phaser.Scene {
     this.scoreText;
     this.randObject;
     this.timeCheck = false;
-    // this.numObstacles = 0;
-
   }
 
   preload() {
-    this.load.image('bg1', new URL('../../assets/shrexy-bg4.png',
+    this.load.image('bg1', new URL('../../assets/Pixel_Art_Forest.png',
       import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log-with-roses.png',
       import.meta.url).href);
@@ -62,9 +60,6 @@ export default class GameScene extends Phaser.Scene {
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
   create() {
-
-    // this.timedEvent = this.time.delayedCall(3000, ()=>{}, [], this);
-
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
     this.ground = this.add.tileSprite(this.game.config.width / 2, this.game.config.height, 1152, 108, 'ground');
@@ -82,11 +77,9 @@ export default class GameScene extends Phaser.Scene {
       b.destroy();
     });
 
-
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.obstacles, this.ground);
     this.physics.add.collider(this.coins, this.ground);
-
 
     this.physics.add.collider(this.player, this.obstacles, (a, b) => {
       if (b.type === 'stick') {
@@ -120,15 +113,20 @@ export default class GameScene extends Phaser.Scene {
   update(time, delta) {
     this.timerEvent += delta;
     this.timerEvent2 += delta;
-
     this.timer();
     this.spawner();
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.type === "bird") {
         obstacle.anims.play('fly', true);
+        // console.log(obstacle)
       }
     });
     this.player.anims.play('run', true);
+    // console.log(this.player)
+    // console.log(this.coins)
+    this.coins.getChildren().forEach((coin) => {
+      coin.anims.play('spin', true);
+    });
     this.player.update();
     this.moveObject();
     this.gameOver();
@@ -140,26 +138,20 @@ export default class GameScene extends Phaser.Scene {
     // this.physics.add.overlap(this.player, this.enemies, () => {
     if (this.timeCheck === false) {
       this.generateObject();
-      // console.log(this.obstacles)
       this.timeCheck = true;
       this.timerEvent2 = 0;
     }
     if (this.timeCheck === true && this.timerEvent2 > (Phaser.Math.Between(1, 4) * 1000)) {
-      // this.timerEvent -=  3000;
       this.timeCheck = false;
     }
-    // });
-
   }
 
   setScoreText() {
-    // console.log('hello')
     this.scoreText.setText('SCORE: ' + this.score)
   }
 
   timer() {
     if (this.tick === false) {
-      // console.log(this.score);
       this.score += 1;
       this.setScoreText();
       this.tick = true;
@@ -178,15 +170,9 @@ export default class GameScene extends Phaser.Scene {
 
     this.obstacles.getChildren().forEach((obstacle) => {
 
-      //The bird sprite approaches shrek from the sky or from the ground
+      //The bird sprite approaches shrek from the ground
       if (obstacle.type === "bird") {
-        // if (obstacle.y >= this.game.config.height / 1.85){
-        obstacle.setYPosition(this.game.config.height / 1.85, this.game.config.height - 143)
-        // }
-        // else{
-        // obstacle.setYPosition(this.game.config.height - 143, this.game.config.height / 1.85)
-
-        // }
+        obstacle.setYPositionUp();
       }
       if (obstacle.getBounds().right < 0) {
         obstacle.destroy()
@@ -196,15 +182,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   generateObject() {
-    this.randObject = Phaser.Math.Between(1, 4);
+    this.randObject = Phaser.Math.Between(1, 3);
     if (this.randObject === 1) {
-      this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height / 1.85));
-    }else if (this.randObject === 2) {
-      this.obstacles.add(new BirdObstacle(this, this.game.config.width, this.game.config.height - 143));
-    }  
-    else if (this.randObject === 3) {
+      this.obstacles.add(new BirdObstacle(this, this.game.config.width + 150, this.game.config.height - 143));
+    }
+    else if (this.randObject === 2) {
+
       this.obstacles.add(new LogObstacle(this, this.game.config.width, this.game.config.height - 143));
-    } else if (this.randObject === 4) {
+    } else if (this.randObject === 3) {
+
       this.coins.add(new Coin(this, this.game.config.width, this.game.config.height - 143));
     }
   }
@@ -213,25 +199,25 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: 'run',
       frames: [{
-          key: 'shrekanim',
-          frame: 0
-        },
-        {
-          key: 'shrekanim',
-          frame: 1
-        },
-        {
-          key: 'shrekanim',
-          frame: 2
-        },
-        {
-          key: 'shrekanim',
-          frame: 3
-        },
-        {
-          key: 'shrekanim',
-          frame: 4
-        },
+        key: 'shrekanim',
+        frame: 0
+      },
+      {
+        key: 'shrekanim',
+        frame: 1
+      },
+      {
+        key: 'shrekanim',
+        frame: 2
+      },
+      {
+        key: 'shrekanim',
+        frame: 3
+      },
+      {
+        key: 'shrekanim',
+        frame: 4
+      },
       ],
       frameRate: 10,
       repeat: 0
@@ -240,21 +226,77 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: 'fly',
       frames: [{
-          key: 'birdanim',
-          frame: 0
-        },
-        {
-          key: 'birdanim',
-          frame: 1
-        },
-        {
-          key: 'birdanim',
-          frame: 2
-        },
-        {
-          key: 'birdanim',
-          frame: 3
-        },
+        key: 'birdanim',
+        frame: 0
+      },
+      {
+        key: 'birdanim',
+        frame: 1
+      },
+      {
+        key: 'birdanim',
+        frame: 2
+      },
+      {
+        key: 'birdanim',
+        frame: 3
+      },
+      ],
+      frameRate: 10,
+      repeat: 0
+    });
+
+    this.anims.create({
+      key: 'spin',
+      frames: [{
+        key: 'coinanim',
+        frame: 0
+      },
+      {
+        key: 'coinanim',
+        frame: 1
+      },
+      {
+        key: 'coinanim',
+        frame: 2
+      },
+      {
+        key: 'coinanim',
+        frame: 3
+      },
+      {
+        key: 'coinanim',
+        frame: 4
+      },
+      {
+        key: 'coinanim',
+        frame: 6
+      },
+      {
+        key: 'coinanim',
+        frame: 7
+      },
+      {
+        key: 'coinanim',
+        frame: 8
+      },
+      {
+        key: 'coinanim',
+        frame: 9
+      },
+      {
+        key: 'coinanim',
+        frame: 10
+      },
+      {
+        key: 'coinanim',
+        frame: 11
+      },
+      {
+        key: 'coinanim',
+        frame: 12
+      },
+
       ],
       frameRate: 10,
       repeat: 0
@@ -265,7 +307,6 @@ export default class GameScene extends Phaser.Scene {
   gameOver() {
     if (this.isAlive == false) {
       this.scene.start('GameOverScene');
-      // console.log('DONKEH!!');
     }
     this.isAlive = true;
   }

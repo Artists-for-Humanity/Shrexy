@@ -8,8 +8,6 @@ import {
 } from '../constants';
 
 export default class GameScene extends Phaser.Scene {
-  player;
-  obstacle;
 
   constructor() {
     super({
@@ -23,6 +21,8 @@ export default class GameScene extends Phaser.Scene {
     this.tries = 0;
     this.randObject;
     this.coins;
+    this.player;
+    this.obstacle;
 
     // Variables for score timer
     this.timerEvent = 0;
@@ -71,7 +71,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.ground.setOrigin(0.5, 1);
     this.physics.world.enable(this.ground);
-    this.ground.body.setImmovable(true);
+    this.ground.body.setImmovable(true);//this one
 
     this.obstacles = this.physics.add.group();
     this.player = new Player(this, this.game.config.width / 4, this.game.config.height / 2);

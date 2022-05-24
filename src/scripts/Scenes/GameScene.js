@@ -32,8 +32,6 @@ export default class GameScene extends Phaser.Scene {
     this.scoreText;
     this.randObject;
     this.timeCheck = false;
-    // this.numObstacles = 0;
-
   }
 
   preload() {
@@ -61,8 +59,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
-  create() {
 
+  create() { // hello
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
     this.ground = this.add.tileSprite(this.game.config.width / 2, this.game.config.height, 1152, 108, 'ground');
@@ -116,15 +114,20 @@ export default class GameScene extends Phaser.Scene {
   update(time, delta) {
     this.timerEvent += delta;
     this.timerEvent2 += delta;
-
     this.timer();
     this.spawner();
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.type === "bird") {
         obstacle.anims.play('fly', true);
+        // console.log(obstacle)
       }
     });
     this.player.anims.play('run', true);
+    // console.log(this.player)
+    // console.log(this.coins)
+    this.coins.getChildren().forEach((coin) => {
+      coin.anims.play('spin', true);
+    });
     this.player.update();
     this.moveObject();
     this.gameOver();
@@ -168,7 +171,6 @@ export default class GameScene extends Phaser.Scene {
     Phaser.Actions.IncX(this.coins.getChildren(), -this.gameSpeed);
 
     this.obstacles.getChildren().forEach((obstacle) => {
-
       //The bird sprite approaches shrek from the sky or from the ground
       if (obstacle.type === "bird") {
         obstacle.setYPosition(this.game.config.height / 1.85, this.game.config.height - 143)
@@ -239,6 +241,62 @@ export default class GameScene extends Phaser.Scene {
           key: 'birdanim',
           frame: 3
         },
+      ],
+      frameRate: 10,
+      repeat: 0
+    });
+
+    this.anims.create({
+      key: 'spin',
+      frames: [{
+          key: 'coinanim',
+          frame: 0
+        },
+        {
+          key: 'coinanim',
+          frame: 1
+        },
+        {
+          key: 'coinanim',
+          frame: 2
+        },
+        {
+          key: 'coinanim',
+          frame: 3
+        },
+        {
+          key: 'coinanim',
+          frame: 4
+        },
+        {
+          key: 'coinanim',
+          frame: 6
+        },
+        {
+          key: 'coinanim',
+          frame: 7
+        },
+        {
+          key: 'coinanim',
+          frame: 8
+        },
+        {
+          key: 'coinanim',
+          frame: 9
+        },
+        {
+          key: 'coinanim',
+          frame: 10
+        },
+        {
+          key: 'coinanim',
+          frame: 11
+        },
+        {
+          key: 'coinanim',
+          frame: 12
+        },
+
       ],
       frameRate: 10,
       repeat: 0

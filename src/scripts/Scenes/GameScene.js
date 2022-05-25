@@ -121,12 +121,9 @@ export default class GameScene extends Phaser.Scene {
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.type === "bird") {
         obstacle.anims.play('fly', true);
-        // console.log(obstacle)
       }
     });
     this.player.anims.play('run', true);
-    // console.log(this.player)
-    // console.log(this.coins)
     this.coins.getChildren().forEach((coin) => {
       coin.anims.play('spin', true);
     });

@@ -156,4 +156,9 @@ body {
     .tagline-text-align-2 {
         text-align: right;
     }
+
+    /* @font-face{
+        font-family: CustomFont;
+        src: url('./assets/fonts/Luminari-Regular.woff');
+    } */
 }

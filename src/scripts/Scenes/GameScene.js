@@ -60,7 +60,7 @@ export default class GameScene extends Phaser.Scene {
 
   // Spawns in Shrek on the X-axis & Stick on the opposite side of Shrek
 
-  create() { // hello
+  create() {
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
 
     this.ground = this.add.tileSprite(this.game.config.width / 2, this.game.config.height, 1152, 108, 'ground');
@@ -97,6 +97,8 @@ export default class GameScene extends Phaser.Scene {
     });
     this.getAnim();
 
+    this.globalState.resetScore();
+
     this.scoreText = this.add.text(this.game.config.width * .05, this.game.config.height * .05, '', {
       fontFamily: 'Luminari Regular',
       fontSize: '24px',
@@ -119,12 +121,9 @@ export default class GameScene extends Phaser.Scene {
     this.obstacles.getChildren().forEach((obstacle) => {
       if (obstacle.type === "bird") {
         obstacle.anims.play('fly', true);
-        // console.log(obstacle)
       }
     });
     this.player.anims.play('run', true);
-    // console.log(this.player)
-    // console.log(this.coins)
     this.coins.getChildren().forEach((coin) => {
       coin.anims.play('spin', true);
     });

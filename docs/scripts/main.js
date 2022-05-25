@@ -1,8 +1,11 @@
 import Phaser from '../snowpack/pkg/phaser.js';
 import MenuScene from './Scenes/MenuScene.js';
 import GameScene from './Scenes/GameScene.js';
-import { dimensions } from './constants.js';
+import {
+  dimensions
+} from './constants.js';
 import GameOverScene from './Scenes/GameOverScene.js';
+import GlobalState from './GlobalState.js';
 
 // Set configuration for phaser game instance
 const config = {
@@ -14,12 +17,21 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false,
+      debug: true,
     },
   },
   scene: [MenuScene, GameScene, GameOverScene],
   audio: {
     disableWebAudio: true,
+  },
+  plugins: {
+    global: [{
+      key: 'GlobalState',
+      plugin: GlobalState,
+      start: false,
+      mapping: 'globalState'
+
+    }],
   },
 };
 

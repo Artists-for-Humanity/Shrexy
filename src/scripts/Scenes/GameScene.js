@@ -28,14 +28,17 @@ export default class GameScene extends Phaser.Scene {
     this.timerEvent = 0;
     this.timerEvent2 = 0;
     this.tick = false;
-    // this.score = 0;
     this.scoreText;
     this.randObject;
     this.timeCheck = false;
   }
 
   preload() {
-    this.load.image('bg1', new URL('../../assets/shrexy-bg4.png',
+    this.load.image('bg1', new URL('../../assets/Pixel_Art_Forest.png',
+      import.meta.url).href);
+    this.load.image('heart', new URL('../../assets/heart.png',
+      import.meta.url).href);
+    this.load.image('ui', new URL('../../assets/ShrekUI.png',
       import.meta.url).href);
     this.load.image('stick', new URL('../../assets/log-with-roses.png',
       import.meta.url).href);
@@ -62,8 +65,8 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     this.background = this.add.tileSprite(this.game.config.width / 2, this.game.config.height / 2, 1152, 864, 'bg1');
-
     this.ground = this.add.tileSprite(this.game.config.width / 2, this.game.config.height, 1152, 108, 'ground');
+    this.add.image(this.game.config.width - 875, this.game.config.height - 750, 'ui');
 
     this.ground.setOrigin(0.5, 1);
     this.physics.world.enable(this.ground);
@@ -100,8 +103,8 @@ export default class GameScene extends Phaser.Scene {
     this.globalState.resetScore();
 
     this.scoreText = this.add.text(this.game.config.width * .05, this.game.config.height * .05, '', {
-      fontFamily: 'Luminari Regular',
-      fontSize: '24px',
+      fontFamily: 'Luminari',
+      fontSize: '30px',
       fontStyle: 'bold',
       fill: colors.white,
       align: 'center',

@@ -27,16 +27,17 @@ export default class MenuScene extends Phaser.Scene {
       import.meta.url).href);
     this.load.image('rock', new URL('../../assets/rock.png',
       import.meta.url).href);
+    this.load.image('blur', new URL('../../assets/bluredBG.png',
+      import.meta.url).href);
   }
 
   create() {
-    this.add.image(this.game.config.width / 2, this.game.config.height * .425, 'background-3').setScale(1.1, 1.1);
-    this.play = this.add.image(this.game.config.width / 3.5, this.game.config.height * .45, 'lilypad').setScale(0.8, 0.8);
+    this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'blur');
+    this.add.image(this.game.config.width / 2, this.game.config.height - 450, 'background-3').setScale(1.1, 1.1);
 
-    this.home = this.add.image(this.game.config.width * .68, this.game.config.height * .49, 'rock').setInteractive().setScale(1.2, 1.2);
+    this.play = this.add.image(this.game.config.width / 3.5, this.game.config.height - 300, 'lilypad').setScale(0.8, 0.8);
 
-    // this.home.setSize(25, 25);
-    // this.home.setPadding(16);
+    this.home = this.add.image(this.game.config.width - 350, this.game.config.height - 300, 'rock').setInteractive().setScale(1.2, 1.2);
 
     console.log(this.home);
 
@@ -44,7 +45,7 @@ export default class MenuScene extends Phaser.Scene {
 
 
 
-    this.bounds1 = this.home.getBounds();
+    this.bounds1 = this.play.getBounds();
 
     this.graphics.lineStyle(1, 0xff0000);
     // this.graphics.strokeRectShape(this.bounds1);
@@ -61,10 +62,10 @@ export default class MenuScene extends Phaser.Scene {
 
     WebFont.load({
       custom: {
-        families: ['Slackey', 'Luminari'],
+        families: ['Luminari'],
       },
       active: () => {
-        this.add.text(this.game.config.width - 930, this.game.config.height - 535, 'Play', {
+        this.add.text(this.game.config.width - 930, this.game.config.height - 375, 'Play', {
           fontFamily: 'Luminari',
           fontSize: '100px',
           fill: colors.white,
@@ -76,8 +77,7 @@ export default class MenuScene extends Phaser.Scene {
             blur: 42
           }
         }).setPadding(16);
-
-        this.add.text(this.game.config.width - 775, this.game.config.height - 875, 'Shrexy', {
+        this.add.text(this.game.config.width - 775, this.game.config.height - 700, 'Shrexy', {
           fontFamily: 'Luminari',
           fontSize: '120px',
           fill: colors.shrexyGreen,
@@ -89,7 +89,7 @@ export default class MenuScene extends Phaser.Scene {
             blur: 42
           }
         }).setPadding(16);
-        this.add.text(this.game.config.width - 875, this.game.config.height - 730, 'Escape Lord Farquaad!', {
+        this.add.text(this.game.config.width - 875, this.game.config.height - 550, 'Escape Lord Farquaad!', {
           fontFamily: 'Luminari',
           fontSize: '55px',
           fill: colors.escapeGold,
@@ -101,7 +101,7 @@ export default class MenuScene extends Phaser.Scene {
             blur: 42
           }
         }).setPadding(16);
-        this.add.text(this.game.config.width - 500, this.game.config.height - 535, 'Home', {
+        this.add.text(this.game.config.width - 500, this.game.config.height - 375, 'Home', {
           fontFamily: 'Luminari',
           fontSize: '100px',
           fill: colors.white,
